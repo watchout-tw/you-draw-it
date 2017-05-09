@@ -22,12 +22,25 @@ var makeGraph = function(points, options) {
     .y(function(d) { return yScale(d.y); })
     .curve(d3.curveCatmullRom.alpha(0.2));
 
-  // draw circles
-  var circles = graph.append('g').selectAll('circle').data(points).enter()
-      .append('circle')
+  // draw circles & path through circles
+  // https://github.com/d3/d3-selection/blob/master/README.md#selection_data
+  // General Update Pattern
+  // select → data → exit → remove → enter → append → merge
+  var drawCircles = function() {
+    var circles = graph.selectAll('circle').data(points, function(d) { return d.x; });
+    circles.exit().remove();
+    circles.enter().append('circle').merge(circles)
       .attr('r', options.r)
       .attr('cx', function(d) { return xScale(d.x); })
       .attr('cy', function(d) { return yScale(d.y); });
+  };
+  var drawPath = function() {
+    var path = graph.selectAll('path').data([points]);
+    path.exit().remove();
+    path.enter().append('path').merge(path).attr('d', line);
+  };
+  drawCircles();
+  drawPath();
 
   // set up dragging
   var drag = d3.drag().on('drag', function dragHandler() {
@@ -37,9 +50,10 @@ var makeGraph = function(points, options) {
     var y = Math.max(padding, Math.min(m[1], options.h - padding));
 
     for(var target = 0; x > (xScale.range()[0] + xScale.step()*target + xScale.bandwidth()/2); target++);
-    if(target < circles.size()) {
-      points[target].y = y;
-      circles.filter(function(d, i) { return i === target; }).attr('cy', y);
+    if(target < points.length) {
+      points[target].y = yScale.invert(y);
+      drawCircles();
+      drawPath();
     }
   });
   graph.call(drag);
