@@ -2,141 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <style type="text/css">
-    * {
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
-
-    body {
-       font-family: Avenir,helvetica,arial,comic sans,sans-serif;
-    }
-
-    svg {
-      cursor: pointer;
-      display: block;
-    }
-
-    circle {
-      fill: #001f3f;
-    }
-
-    path {
-      fill: none;
-      stroke: #001f3f;
-      stroke-width: 2;
-    }
-
-    .olive-bg {
-      background-color: #3D9970;
-    }
-
-    .center {
-      margin: 0 auto;
-    }
-
-    header {
-      padding: 2rem 0;
-    }
-
-    main {
-      padding: 2rem 0;
-      width: 100%;
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #001f3f;
-    }
-
-    h2 {
-      font-weight: 100;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/style.css" />
+  <title>不然你來畫畫看啊</title>
 </head>
 <body>
-  <header class="olive-bg">
-    <svg class="center"></svg>
-  </header>
-  <main>
-    <h1>you draw it</h1>
-    <h2>simple line drawing with D3</h2>
-    <h2>click and drag to reshape the graph</h2>
-  </main>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
-  <script type="text/javascript">
-    var width = 800;
-    var height = 300;
-    var radius = 4;
-    var padding = radius * 6;
-    var numCircles = 20;
-
-    var svg = d3.select('svg')
-      // .append('svg')
-      .attr('width', width)
-      .attr('height', height);
-
-    // maps point positions to pixel positions along the x axis
-    var spread = d3.scale.ordinal()
-      .domain(d3.range(numCircles))
-      .rangeBands([0, width], 0, 1);
-
-    // function for generating svg path
-    var line = d3.svg.line()
-      .x(function(d) { return d.x; })
-      .y(function(d) { return d.y; })
-      .interpolate("cardinal");
-
-    // create a fixed number of points for the graph
-    var points = d3.range(numCircles).map(function(d) {
-      return {
-        x: spread(d),
-        y: Math.floor(Math.random() * (height - 2*padding) + padding)
-      }
-    });
-
-    var circles = svg
-      .append('g')
-      .selectAll('circle')
-      .data(points)
-      .enter()
-        .append('circle')
-        .attr({
-          r: radius,
-          cx: function(d) { return d.x },
-          cy: function(d) { return d.y }
-        });
-
-    function drawPath() {
-      var path = svg.selectAll('path').data([points]);
-      path.enter().append('path');
-      path.attr('d', line);
-      path.exit().remove();
-    }
-
-    // draw the initial path through the points
-    drawPath();
-
-    var drag = d3.behavior.drag().on('drag', dragHandler);
-    svg.call(drag);
-
-    function dragHandler() {
-      var m = d3.mouse(this);
-      var x = m[0];
-      var y = Math.max(padding, Math.min(m[1], height - padding))
-
-      var range = spread.range();
-      var space = spread.rangeBand() / 2;
-      for (var i = 0; x > (range[i] + space); i++) {}
-
-      if (i >= circles[0].length) return;
-
-      d3.select(circles[0][i]).attr('cy', y);
-      points[i].y = y;
-      drawPath();
-    }
-  </script>
+  <div class="graph" id="graph0"></div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js" charset="utf-8"></script>
+  <script src="./src/draw.js"></script>
+  <script src="./src/data.js"></script>
+  <script src="./src/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+/* General */
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+body {
+  font-family: sans-serif;
+}
+
+/* Graph */
+
+.graph {
+}
+svg {
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  border: 1px blue solid;
+}
+circle {
+  fill: blue;
+}
+path {
+  fill: none;
+  stroke: blue;
+  stroke-width: 2;
+}
