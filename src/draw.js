@@ -42,9 +42,9 @@ var makeGraph = function(points, options) {
   drawCircles();
   drawPath();
 
-  // set up dragging
-  var drag = d3.drag().on('drag', function dragHandler() {
-    // get mouse position
+  // make callback to redraw at user input
+  function redraw() {
+    // get input position
     var m = d3.mouse(this);
     var x = m[0];
     var y = Math.max(padding, Math.min(m[1], options.h - padding));
@@ -55,6 +55,7 @@ var makeGraph = function(points, options) {
       drawCircles();
       drawPath();
     }
-  });
-  graph.call(drag);
+  }
+  graph.on('mousedown', redraw);
+  graph.call(d3.drag().on('drag', redraw));
 };
