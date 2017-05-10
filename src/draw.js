@@ -1,63 +1,71 @@
 var Graph = function(data, options) {
-  options.w = !!options.w ? options.w : 800;
-  options.h = !!options.h ? options.h : 450;
-  options.r = !!options.r ? options.r : 4;
+  // thanks to https://github.com/ryanmcdermott/clean-code-javascript
+  options = Object.assign({
+    w: 800,
+    h: 450,
+    r: 4,
+  }, options);
   options.padding = options.r*8;
 
   var self = this;
-  self.options = options;
-  self.data = data;
+  this.options = options;
+  this.data = data;
   // clone data without hide attribute
-  self.data.originalPoints = JSON.parse(JSON.stringify(self.data.points)).map(function(obj) { delete obj.hide; return obj; });
+  this.data.originalPoints = JSON.parse(JSON.stringify(this.data.points))
+    .map(function(obj) {
+      delete obj.hide;
+      return obj;
+    });
 
-  self.graph = d3.select(self.options.el)
+  this.graph = d3.select(this.options.el)
     .append('svg')
-    .attr('width', self.options.w)
-    .attr('height', self.options.h);
+    .attr('width', this.options.w)
+    .attr('height', this.options.h);
 
   // x & y scale
-  var xValues = self.data.points.map(function(d) { return d.x; });
-  self.xScale = d3.scalePoint()
+  var xValues = this.data.points.map(function(d) { return d.x; });
+  this.xScale = d3.scalePoint()
     .domain(xValues)
-    .range([0 + self.options.padding, options.w - self.options.padding]);
-  self.yScale = d3.scaleLinear()
+    .range([0 + this.options.padding, options.w - this.options.padding]);
+  this.yScale = d3.scaleLinear()
     .domain([data.axes.y.min, data.axes.y.max])
-    .range([self.options.h - self.options.padding, 0 + self.options.padding]);
+    .range([this.options.h - this.options.padding, 0 + this.options.padding]);
 
   // function for generating path between points
-  self.line = d3.line()
+  this.line = d3.line()
     .x(function(d) { return self.xScale(d.x); })
     .y(function(d) { return self.yScale(d.y); });
 
   // draw circles & path through circles
-  self.gUser = self.graph.append('g').attr('id', 'user');
-  self.gOriginal = self.graph.append('g').attr('id', 'original');
-  self.drawUser();
+  this.gUser = this.graph.append('g').attr('id', 'user');
+  this.gOriginal = this.graph.append('g').attr('id', 'original');
 
   // draw x axis
-  self.xAxis = d3.axisTop(self.xScale)
+  this.xAxis = d3.axisTop(this.xScale)
     .tickFormat(function(d) {
       return d + (this.parentNode.nextSibling ? '' : self.data.axes.x.unit); // add unit at last tick
     });
-  self.graph.append('g')
+  this.graph.append('g')
     .attr('id', 'axis-x')
-    .attr('transform', 'translate(' + [0, self.options.h - 2].join(',') + ')')
-    .call(self.xAxis);
+    .attr('transform', 'translate(' + [0, this.options.h - 2].join(',') + ')')
+    .call(this.xAxis);
 
   // draw y axis
-  self.yFormat = d3.format(self.data.axes.y.formatString);
-  self.yAxis = d3.axisRight(self.yScale)
+  this.yFormat = function(d) {
+    return d3.format(self.data.axes.y.formatString)(d/self.data.axes.y.divider);
+  };
+  this.yAxis = d3.axisRight(this.yScale)
     .tickFormat(function(d) {
       // format + unit at last tick
-      return self.yFormat(d/self.data.axes.y.divider) + (this.parentNode.nextSibling ? '' : self.data.axes.y.unit);
+      return self.yFormat(d) + (this.parentNode.nextSibling ? '' : self.data.axes.y.unit);
     });
-  self.graph.append('g')
+  this.graph.append('g')
     .attr('id', 'axis-y')
-    .call(self.yAxis);
+    .call(this.yAxis);
 
   // add button to finish and show comparison
-  self.button = d3.select(self.options.el).append('button')
-    .text('畫好了啦。')
+  this.button = d3.select(this.options.el).append('button')
+    .text('畫好了啦')
     .on('click', function() {
       self.drawOriginal();
       self.graph.on('mousedown', null);
@@ -80,8 +88,11 @@ var Graph = function(data, options) {
     }
   }
   // execute callback on click/touch/drag
-  self.graph.on('mousedown', redraw);
-  self.graph.call(d3.drag().on('drag', redraw));
+  this.graph.on('mousedown', redraw);
+  this.graph.call(d3.drag().on('drag', redraw));
+
+  // draw
+  this.drawUser();
 };
 Graph.prototype.drawUser = function() {
   this.drawPath(this.gUser, this.data.points);
@@ -95,17 +106,43 @@ Graph.prototype.drawPath = function(graph, points) {
   // select → data → exit → remove → enter → append → merge
   var self = this;
 
+  // find segments
+  var segments = [];
+  var currentSegment = [];
+  for(var point of points) {
+    if(point.hide === true) {
+      if(currentSegment.length > 0)
+        segments.push(currentSegment);
+      currentSegment = [];
+    }
+    else {
+      currentSegment.push(point);
+    }
+  }
+  if(currentSegment.length > 0)
+    segments.push(currentSegment);
+
+  // draw path
+  var paths = graph.selectAll('path').data(segments);
+  paths.exit().remove();
+  paths.enter().append('path').merge(paths).attr('d', this.line);
+
   // draw circles
   var circles = graph.selectAll('circle').data(points, function(d) { return d.x; });
   circles.exit().remove();
   circles.enter().append('circle').merge(circles)
-    .attr('r', self.options.r)
+    .attr('r', this.options.r)
     .attr('cx', function(d) { return self.xScale(d.x); })
     .attr('cy', function(d) { return self.yScale(d.y); })
+    .classed('fix', function(d) {return !!d.fix })
     .classed('hide', function(d) { return !!d.hide });
 
-  // draw path
-  var path = graph.selectAll('path').data([points]);
-  path.exit().remove();
-  path.enter().append('path').merge(path).attr('d', self.line);
+  var labels = graph.selectAll('text').data(points, function(d) { return d.x; });
+  labels.exit().remove();
+  labels.enter().append('text').merge(labels)
+    .text(function(d) { console.log(self); return self.yFormat(d.y); })
+    .attr('x', function(d) { return self.xScale(d.x); })
+    .attr('y', function(d) { return self.yScale(d.y) - self.options.r*1.5; })
+    .classed('hide', function(d) { return !!d.hide });
+
 };

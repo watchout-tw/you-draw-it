@@ -23,27 +23,34 @@ svg {
 path {
   fill: none;
 }
+text {
+}
 .hide {
   visibility: hidden;
 }
-#user {
-  $color: blue;
-  circle {
-    fill: $color
-  }
+$color-user: blue;
+$color-original: lime;
+#user, #original {
   path {
-    stroke: $color;
     stroke-width: 2;
+    stroke: rgba(blue, 0.25);
+  }
+  text {
+    font-size: 0.85rem;
+    text-anchor: middle;
+  }
+}
+#user {
+  circle {
+    fill: $color-user;
+    &.fix {
+      fill: $color-original;
+    }
   }
 }
 #original {
-  $color: lime;
   circle {
-    fill: $color;
-  }
-  path {
-    stroke: $color;
-    stroke-width: 2;
+    fill: $color-original;
   }
 }
 
@@ -52,8 +59,8 @@ path {
 button {
   margin: 0.25rem;
   padding: 0.5rem;
-  background: rgba(blue, 0.25);
-  border: 2px blue solid;
+  background: rgba(black, 0.25);
+  border-radius: 2px;
   text-align: center;
   font-size: 1rem;
   cursor: pointer;

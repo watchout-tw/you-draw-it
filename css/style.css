@@ -23,24 +23,27 @@ path {
 .hide {
   visibility: hidden; }
 
+#user path, #original path {
+  stroke-width: 2;
+  stroke: rgba(0, 0, 255, 0.25); }
+#user text, #original text {
+  font-size: 0.85rem;
+  text-anchor: middle; }
+
 #user circle {
   fill: blue; }
-#user path {
-  stroke: blue;
-  stroke-width: 2; }
+  #user circle.fix {
+    fill: lime; }
 
 #original circle {
   fill: lime; }
-#original path {
-  stroke: lime;
-  stroke-width: 2; }
 
 /* Other UI elements */
 button {
   margin: 0.25rem;
   padding: 0.5rem;
-  background: rgba(0, 0, 255, 0.25);
-  border: 2px blue solid;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
   text-align: center;
   font-size: 1rem;
   cursor: pointer; }
