@@ -19,6 +19,9 @@ var PublicDebt = {
     {x: 2017, y: 5511942},
   ],
   axes: {
+    x: {
+      unit: '年'
+    },
     y: {
       min: 0,
       max: 6000000,

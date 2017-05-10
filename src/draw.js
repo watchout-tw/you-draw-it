@@ -65,7 +65,11 @@ var makeGraph = function(data, options) {
   graph.on('mousedown', redraw);
   graph.call(d3.drag().on('drag', redraw));
 
-  var xAxis = d3.axisTop(xScale);
+  // draw axes
+  var xAxis = d3.axisTop(xScale)
+    .tickFormat(function(d) {
+      return d + (this.parentNode.nextSibling ? '' : data.axes.x.unit); // add unit at last tick
+    });
   graph.append('g')
     .attr('id', 'axis-x')
     .attr('transform', 'translate(' + [0, options.h].join(',') + ')')
@@ -74,6 +78,7 @@ var makeGraph = function(data, options) {
   var yFormat = d3.format(data.axes.y.formatString);
   var yAxis = d3.axisRight(yScale)
     .tickFormat(function(d) {
+      // format + unit at last tick
       return yFormat(d/data.axes.y.divider) + (this.parentNode.nextSibling ? '' : data.axes.y.unit);
     });
   graph.append('g')
