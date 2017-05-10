@@ -16,6 +16,8 @@ svg {
 
 circle {
   fill: blue; }
+  circle.hide {
+    visibility: hidden; }
 
 path {
   fill: none;

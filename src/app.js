@@ -1,5 +1,5 @@
 $(function() {
-  makeGraph(dataPublicDebt, {
+  makeGraph(PublicDebt, {
     el: '#graph0',
   });
 });
