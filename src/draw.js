@@ -2,12 +2,13 @@ var Graph = function(data, options) {
   options.w = !!options.w ? options.w : 800;
   options.h = !!options.h ? options.h : 450;
   options.r = !!options.r ? options.r : 4;
-
   options.padding = options.r*8;
 
   var self = this;
-  self.data = data;
   self.options = options;
+  self.data = data;
+  // clone data without hide attribute
+  self.data.originalPoints = JSON.parse(JSON.stringify(self.data.points)).map(function(obj) { delete obj.hide; return obj; });
 
   self.graph = d3.select(self.options.el)
     .append('svg')
@@ -26,14 +27,12 @@ var Graph = function(data, options) {
   // function for generating path between points
   self.line = d3.line()
     .x(function(d) { return self.xScale(d.x); })
-    .y(function(d) { return self.yScale(d.y); })
-    .curve(d3.curveCatmullRom.alpha(1));
+    .y(function(d) { return self.yScale(d.y); });
 
   // draw circles & path through circles
-  self.gCircles = self.graph.append('g').attr('id', 'circles');
-  self.gPaths = self.graph.append('g').attr('id', 'paths');
-  self.drawCircles();
-  self.drawPath();
+  self.gUser = self.graph.append('g').attr('id', 'user');
+  self.gOriginal = self.graph.append('g').attr('id', 'original');
+  self.drawUser();
 
   // draw x axis
   self.xAxis = d3.axisTop(self.xScale)
@@ -42,7 +41,7 @@ var Graph = function(data, options) {
     });
   self.graph.append('g')
     .attr('id', 'axis-x')
-    .attr('transform', 'translate(' + [0, self.options.h].join(',') + ')')
+    .attr('transform', 'translate(' + [0, self.options.h - 2].join(',') + ')')
     .call(self.xAxis);
 
   // draw y axis
@@ -57,7 +56,13 @@ var Graph = function(data, options) {
     .call(self.yAxis);
 
   // add button to finish and show comparison
-  self.button = d3.select(self.options.el).append('button').text('Done.');
+  self.button = d3.select(self.options.el).append('button')
+    .text('畫好了啦。')
+    .on('click', function() {
+      self.drawOriginal();
+      self.graph.on('mousedown', null);
+      self.graph.on('mousedown.drag', null);
+    });
 
   // make callback to redraw at user input
   function redraw() {
@@ -67,34 +72,40 @@ var Graph = function(data, options) {
     var y = Math.max(self.options.padding, Math.min(m[1], self.options.h - self.options.padding));
 
     // find point to modify
-    for(var target = 0; x > (self.xScale.range()[0] + self.xScale.step()*target + self.xScale.bandwidth()/2); target++);
-    if(target < self.data.points.length) {
+    for(var target = 0; x > self.xScale.range()[0] + self.xScale.step()*(target + 0.5); target++);
+    if(target < self.data.points.length && self.data.points[target].fix !== true) {
       self.data.points[target].y = self.yScale.invert(y);
       self.data.points[target].hide = false;
-      self.drawCircles();
-      self.drawPath();
+      self.drawUser();
     }
   }
+  // execute callback on click/touch/drag
   self.graph.on('mousedown', redraw);
   self.graph.call(d3.drag().on('drag', redraw));
 };
-Graph.prototype.drawCircles = function() {
-  var self = this;
-
+Graph.prototype.drawUser = function() {
+  this.drawPath(this.gUser, this.data.points);
+};
+Graph.prototype.drawOriginal = function() {
+  this.drawPath(this.gOriginal, this.data.originalPoints)
+};
+Graph.prototype.drawPath = function(graph, points) {
   // https://github.com/d3/d3-selection/blob/master/README.md#selection_data
   // General Update Pattern
   // select → data → exit → remove → enter → append → merge
-  var circles = self.gCircles.selectAll('circle').data(self.data.points, function(d) { return d.x; });
+  var self = this;
+
+  // draw circles
+  var circles = graph.selectAll('circle').data(points, function(d) { return d.x; });
   circles.exit().remove();
   circles.enter().append('circle').merge(circles)
     .attr('r', self.options.r)
     .attr('cx', function(d) { return self.xScale(d.x); })
     .attr('cy', function(d) { return self.yScale(d.y); })
     .classed('hide', function(d) { return !!d.hide });
-};
-Graph.prototype.drawPath = function() {
-  var self = this;
-  var path = self.gPaths.selectAll('path').data([self.data.points]);
+
+  // draw path
+  var path = graph.selectAll('path').data([points]);
   path.exit().remove();
   path.enter().append('path').merge(path).attr('d', self.line);
 };
