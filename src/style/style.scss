@@ -19,18 +19,32 @@ svg {
   cursor: pointer;
   display: block;
   margin: 0 auto;
-  border: 1px blue solid;
-}
-circle {
-  fill: blue;
-  &.hide {
-    visibility: hidden;
-  }
 }
 path {
   fill: none;
-  stroke: blue;
-  stroke-width: 2;
+}
+.hide {
+  visibility: hidden;
+}
+#user {
+  $color: blue;
+  circle {
+    fill: $color
+  }
+  path {
+    stroke: $color;
+    stroke-width: 2;
+  }
+}
+#original {
+  $color: lime;
+  circle {
+    fill: $color;
+  }
+  path {
+    stroke: $color;
+    stroke-width: 2;
+  }
 }
 
 /* Other UI elements */

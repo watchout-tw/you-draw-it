@@ -15,17 +15,24 @@ body {
 svg {
   cursor: pointer;
   display: block;
-  margin: 0 auto;
-  border: 1px blue solid; }
-
-circle {
-  fill: blue; }
-  circle.hide {
-    visibility: hidden; }
+  margin: 0 auto; }
 
 path {
-  fill: none;
+  fill: none; }
+
+.hide {
+  visibility: hidden; }
+
+#user circle {
+  fill: blue; }
+#user path {
   stroke: blue;
+  stroke-width: 2; }
+
+#original circle {
+  fill: lime; }
+#original path {
+  stroke: lime;
   stroke-width: 2; }
 
 /* Other UI elements */
