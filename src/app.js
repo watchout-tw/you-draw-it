@@ -1,5 +1,6 @@
+var graphs = {};
 $(function() {
-  makeGraph(PublicDebt, {
-    el: '#graph0',
+  graphs.PublicDebt = new Graph(DataSet.PublicDebt, {
+    el: '#graph0'
   });
 });

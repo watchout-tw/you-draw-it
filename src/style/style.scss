@@ -7,11 +7,13 @@
 }
 body {
   font-family: sans-serif;
+  font-size: 16px;
 }
 
 /* Graph */
 
 .graph {
+  text-align: center;
 }
 svg {
   cursor: pointer;
@@ -29,4 +31,20 @@ path {
   fill: none;
   stroke: blue;
   stroke-width: 2;
+}
+
+/* Other UI elements */
+
+button {
+  margin: 0.25rem;
+  padding: 0.5rem;
+  background: rgba(blue, 0.25);
+  border: 2px blue solid;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:active, &:focus {
+    outline: none;
+  }
 }

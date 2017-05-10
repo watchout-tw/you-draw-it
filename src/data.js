@@ -1,4 +1,5 @@
-var PublicDebt = {
+var DataSet = {};
+DataSet.PublicDebt = {
   points: [
     {x: 2001, y: 2759386},
     {x: 2002, y: 2849404},

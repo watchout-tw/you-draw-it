@@ -5,9 +5,13 @@
   border: 0; }
 
 body {
-  font-family: sans-serif; }
+  font-family: sans-serif;
+  font-size: 16px; }
 
 /* Graph */
+.graph {
+  text-align: center; }
+
 svg {
   cursor: pointer;
   display: block;
@@ -23,5 +27,17 @@ path {
   fill: none;
   stroke: blue;
   stroke-width: 2; }
+
+/* Other UI elements */
+button {
+  margin: 0.25rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 255, 0.25);
+  border: 2px blue solid;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer; }
+  button:active, button:focus {
+    outline: none; }
 
 /*# sourceMappingURL=style.css.map */
