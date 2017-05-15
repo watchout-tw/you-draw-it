@@ -22,6 +22,9 @@
 <body>
   <div id="app">
     <nav-bar-simple :channel="common.channels.musou"></nav-bar-simple>
+    <div class="graphs">
+      <graph v-for="g in graphs" :g="g" :key="g.graphID"></graph>
+    </div>
   </div><!-- end of app -->
   <footer></footer>
   <div id="pitcher"></div>

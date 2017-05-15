@@ -1,5 +1,5 @@
-{
-    "monthly-visitors": {
+[
+    {
         "x": {
             "divider": "1",
             "unit": "month",
@@ -17,7 +17,7 @@
         "nofSequences": "2",
         "sheetID": "918177893"
     },
-    "public-debt": {
+    {
         "x": {
             "divider": "1",
             "unit": "year",
@@ -28,11 +28,29 @@
             "unit": "dollar",
             "label": "萬元",
             "min": "0",
-            "max": "6000000",
+            "max": "9000000",
             "formatString": ".1f"
         },
         "graphID": "public-debt",
         "nofSequences": "1",
         "sheetID": "92876274"
+    },
+    {
+        "x": {
+            "divider": "1",
+            "unit": "year",
+            "label": "年"
+        },
+        "y": {
+            "divider": "10000",
+            "unit": "person",
+            "label": "萬人",
+            "min": "0",
+            "max": "12000000",
+            "formatString": ".1f"
+        },
+        "graphID": "annual-visitors",
+        "nofSequences": "1",
+        "sheetID": "1810543594"
     }
-}
+]

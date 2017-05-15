@@ -26,7 +26,7 @@ for graphID, sheetID in sheets.items():
     reader = csv.DictReader(io.StringIO(response.text))
     rows = list(reader)
 
-    dump = {}
+    dump = []
     if(graphID == 'graphs'):
         for row in rows:
             thisID = row['graphID']
@@ -40,7 +40,7 @@ for graphID, sheetID in sheets.items():
                 else:
                     clone[key] = value
             clone['sheetID'] = sheets[thisID]
-            dump[thisID] = clone
+            dump.append(clone)
     else:
         dump = [row for row in rows]
     with open('data/' + graphID + '.json', 'w+', encoding='utf-8') as f:
