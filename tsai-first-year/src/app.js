@@ -34,5 +34,7 @@ var app = new Vue({
   data: {
     common: CommonData,
     graphs: graphs,
+    title: '頁面大標',
+    description: ['段落文字一', '段落文字二'],
   },
 });
