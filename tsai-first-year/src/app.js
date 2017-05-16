@@ -11,7 +11,6 @@ Vue.component('graph', {
         if(row.fix && !(index + 1 < rows.length && !rows[index + 1].fix))
           row.show = false;
       });
-      console.log(this.rows.user)
       this.draw();
     },
     getError: function(response) {

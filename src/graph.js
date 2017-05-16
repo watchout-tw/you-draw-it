@@ -123,7 +123,17 @@ var mxGraph = {
       // draw x axis
       util.axes.x.axis = d3.axisTop(util.axes.x.scale)
         .tickFormat(function(d) {
-          return d + (this.parentNode.nextSibling ? '' : props.axes.x.label); // add unit at last tick
+          if(d.indexOf('/') > -1) { // yyyy/mm
+            var [y, m] = d.split('/');
+            var target = this.parentNode.previousSibling;
+            while(!!target && $(target).text().indexOf('/') < 0) {
+              target = target.previousSibling;
+            }
+            if(!!target && $(target).text().indexOf(y) > -1) {
+              d = m;
+            }
+          }
+          return d + (!!this.parentNode.nextSibling ? '' : props.axes.x.label); // add unit at last tick
         });
       this.el.root.append('g')
         .attr('id', 'axis-x')
