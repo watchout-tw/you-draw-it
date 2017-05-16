@@ -4,13 +4,14 @@ object is a dictionary of things enclosed by {}
 syntax of an object is like
 
 object = {
-  key: value,
-  key: value,
+  key0: value0,
+  key1: value1,
 };
 
 graphs is an array
 each object in graphs contains information of each graph
 */
+
 var graphs = [
   {
     id: 'monthly-visitors',
@@ -33,8 +34,8 @@ var graphs = [
     nofSequences: 2,
     title: '每月來台旅客人數',
     text: {
-      before: 'lalala',
-      after: 'hahaha',
+      before: ['lalala'],
+      after: ['hahaha', 'paragraph'],
     },
   },
 ];
