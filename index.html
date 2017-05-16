@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://use.typekit.net/mub1lty.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
-  <link rel="icon" href="https://watchout.tw/asset/logo/watchout/small.png">
+  <link rel="icon" href="https://watchout.tw/asset/logo/musou/small.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i" />
 	<link rel="stylesheet" href="https://watchout.tw/fonts/century-std/styles.css" />
@@ -23,7 +23,9 @@
   <div id="app">
     <nav-bar-simple :channel="common.channels.musou"></nav-bar-simple>
     <div class="pages">
-      <div v-for="page in pages" :key="page.id"><a class="a-text" :href="page.id">{{ page.title }}</a></div>
+      <div v-for="page in pages" :key="page.id">
+        <a class="a-text" :href="page.id">{{ page.title }}</a>
+      </div>
     </div>
   </div><!-- end of app -->
   <footer></footer>

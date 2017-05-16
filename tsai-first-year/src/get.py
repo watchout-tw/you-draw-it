@@ -30,16 +30,10 @@ for graphID, sheetID in sheets.items():
     if(graphID == 'graphs'):
         for row in rows:
             thisID = row['graphID']
-            clone = {}
-            clone['x'] = {}
-            clone['y'] = {}
-            for key, value in row.items():
-                if key.find('.') > -1:
-                    parent, child = key.split('.')
-                    clone[parent][child] = value
-                else:
-                    clone[key] = value
-            clone['sheetID'] = sheets[thisID]
+            clone = {
+                'id': thisID,
+                'sheetID': sheets[thisID],
+            }
             dump.append(clone)
     else:
         dump = [row for row in rows]

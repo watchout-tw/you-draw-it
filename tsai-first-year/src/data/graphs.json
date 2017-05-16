@@ -1,56 +1,18 @@
 [
     {
-        "x": {
-            "divider": "1",
-            "unit": "month",
-            "label": "月"
-        },
-        "y": {
-            "divider": "10000",
-            "unit": "person",
-            "label": "萬人",
-            "min": "0",
-            "max": "500000",
-            "formatString": ".1f"
-        },
-        "graphID": "monthly-visitors",
-        "nofSequences": "2",
+        "id": "monthly-visitors",
         "sheetID": "918177893"
     },
     {
-        "x": {
-            "divider": "1",
-            "unit": "year",
-            "label": "年"
-        },
-        "y": {
-            "divider": "10000",
-            "unit": "dollar",
-            "label": "萬元",
-            "min": "0",
-            "max": "9000000",
-            "formatString": ".1f"
-        },
-        "graphID": "public-debt",
-        "nofSequences": "1",
+        "id": "public-debt",
         "sheetID": "92876274"
     },
     {
-        "x": {
-            "divider": "1",
-            "unit": "year",
-            "label": "年"
-        },
-        "y": {
-            "divider": "10000",
-            "unit": "person",
-            "label": "萬人",
-            "min": "0",
-            "max": "12000000",
-            "formatString": ".1f"
-        },
-        "graphID": "annual-visitors",
-        "nofSequences": "1",
+        "id": "annual-visitors",
         "sheetID": "1810543594"
+    },
+    {
+        "id": "unemployment",
+        "sheetID": "541577362"
     }
 ]
