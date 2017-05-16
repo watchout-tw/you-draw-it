@@ -8,7 +8,7 @@ Vue.component('graph', {
   methods: {
     getSuccess: function(response) {
       this.g.rows = response.body;
-      $vm0.$el.querySelector('.draw')
+      this.$el.querySelector('.draw')
     },
     getError: function(response) {
       console.error(response);
@@ -17,9 +17,9 @@ Vue.component('graph', {
   template: `
   <div class="graph" :id="g.graphID">
     <h2>{{ g.title }}</h2>
-    <p>{{ g.text.before }}</p>
+    <p v-for="p in g.text.before">{{ p }}</p>
     <div class="draw"></div>
-    <p>{{ g.text.after }}</p>
+    <p v-for="p in g.text.after">{{ p }}</p>
   </div>
   `,
 });
