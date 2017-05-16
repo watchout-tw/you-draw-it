@@ -5,26 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://use.typekit.net/mub1lty.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
-  <link rel="icon" href="https://watchout.tw/asset/logo/musou/small.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i" />
 	<link rel="stylesheet" href="https://watchout.tw/fonts/century-std/styles.css" />
 	<link rel="stylesheet" href="https://watchout.tw/fonts/circular-pro/styles.css" />
 	<link rel="stylesheet" href="https://watchout.tw/fonts/noto-serif-patch/styles.css" />
-  <title>沃草→不然你來畫畫看啊←蔡總統的第一年</title>
+  <link rel="stylesheet" href="https://watchout.tw/css/common.css"/>
 	<!-- common tags -->
 	<!-- page-specific tags -->
-	<meta property="og:description" content="不然你來畫畫看啊：蔡總統的第一年" />
-	<meta property="og:image" content="" />
-  <link rel="stylesheet" href="https://watchout.tw/css/common.css"/>
+  <title>沃草→不然你來畫畫看啊←蔡總統的第一年</title>
+  <meta name="keywords" content="沃草" />
+  <meta name="description" content="" />
+  <!--
+  <meta property="og:url" />
+  <meta property="og:title" />
+  <meta property="og:description" />-->
+  <meta property="og:image" content="https://ask.watchout.tw/asset/opening-regular.jpg" />
+  <link rel="icon" href="https://watchout.tw/asset/logo/musou/small.png">
 	<link rel="stylesheet" href="../css/style.css"/>
 </head>
 <body>
   <div id="app">
     <nav-bar-simple :channel="common.channels.musou"></nav-bar-simple>
-    <div class="graphs">
+    <header>
+      <h1>{{ title }}</h1>
+      <div class="pgroup">
+        <p v-for="p in description">{{ p }}</p>
+      </div>
+    </header>
+    <section id="graphs">
       <graph v-for="g in graphs" :g="g" :key="g.id"></graph>
-    </div>
+    </section>
   </div><!-- end of app -->
   <footer></footer>
   <div id="pitcher"></div>
@@ -37,17 +48,16 @@ ga('create', 'UA-48524226-3', 'watchout.tw');
 ga('require', 'displayfeatures');
 ga('send', 'pageview');
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="https://watchout.tw/src/common.js"></script>
-  <script src="https://watchout.tw/src/footer.js"></script>
-  <script src="https://watchout.tw/src/pitcher.js"></script>
   <!-- common scripts -->
   <!-- page-specific scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js" charset="utf-8"></script>
+  <script src="../src/graph.js"></script>
   <script src="./src/data/graphs.js"></script>
   <script src="./src/app.js"></script>
 </body>

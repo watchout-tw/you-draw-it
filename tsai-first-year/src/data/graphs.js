@@ -16,6 +16,11 @@ var graphs = [
   {
     id: 'monthly-visitors',
     sheetID: '918177893', // run get.py and get sheetID from data/graphs.json
+    size: { // size of graph on page & some other parameters for rendering
+      w: 800,
+      h: 450,
+      r: 4,
+    },
     axes: {
       x: {
         divider: 1,
@@ -40,7 +45,12 @@ var graphs = [
   },
   {
     id: 'annual-visitors',
-    sheetID: '1810543594', // run get.py and get sheetID from data/graphs.json
+    sheetID: '1810543594',
+    size: {
+      w: 800,
+      h: 450,
+      r: 4,
+    },
     axes: {
       x: {
         divider: 1,

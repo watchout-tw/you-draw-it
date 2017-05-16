@@ -1,14 +1,12 @@
 Vue.component('graph', {
-  props: {
-    g: Object,
-  },
+  mixins: [mxGraph],
   created: function() {
     Vue.http.get('./src/data/' + this.g.id + '.json').then(this.getSuccess, this.getError);
   },
   methods: {
     getSuccess: function(response) {
       this.g.rows = response.body;
-      this.$el.querySelector('.draw')
+      this.render();
     },
     getError: function(response) {
       console.error(response);
@@ -31,5 +29,7 @@ var app = new Vue({
   data: {
     common: CommonData,
     graphs: graphs,
+    title: '頁面大標',
+    description: ['段落文字一', '段落文字二'],
   },
 });
