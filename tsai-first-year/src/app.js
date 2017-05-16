@@ -8,7 +8,10 @@ Vue.component('graph', {
   methods: {
     getSuccess: function(response) {
       this.g.rows = response.body;
-      this.$el.querySelector('.draw')
+      this.graph = d3.select(this.$el).select('.draw')
+        .append('svg')
+        .attr('width', this.g.size.w)
+        .attr('height', this.g.size.h);
     },
     getError: function(response) {
       console.error(response);
