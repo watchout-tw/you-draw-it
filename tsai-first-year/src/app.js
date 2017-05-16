@@ -1,17 +1,12 @@
 Vue.component('graph', {
-  props: {
-    g: Object,
-  },
+  mixins: [mxGraph],
   created: function() {
     Vue.http.get('./src/data/' + this.g.id + '.json').then(this.getSuccess, this.getError);
   },
   methods: {
     getSuccess: function(response) {
       this.g.rows = response.body;
-      this.graph = d3.select(this.$el).select('.draw')
-        .append('svg')
-        .attr('width', this.g.size.w)
-        .attr('height', this.g.size.h);
+      this.render();
     },
     getError: function(response) {
       console.error(response);
