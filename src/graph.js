@@ -35,7 +35,7 @@ var mxGraph = {
       var segments = [];
       var currentSegment = [];
       for(var point of points) {
-        if(point.show === 'no') {
+        if(!point.show) {
           if(currentSegment.length > 0)
             segments.push(currentSegment);
           currentSegment = [];
@@ -59,8 +59,8 @@ var mxGraph = {
         .attr('r', this.props.size.r)
         .attr('cx', function(d) { return self.util.axes.x.scale(d.x); })
         .attr('cy', function(d) { return self.util.axes.y.scale(d.y); })
-        .classed('fix', function(d) {return d.show === 'yes' })
-        .classed('hide', function(d) { return d.show === 'no' });
+        .classed('fix', function(d) {return d.fix; })
+        .classed('hide', function(d) { return !d.show; });
 
       var labels = el.selectAll('text').data(points, function(d) { return d.x; });
       labels.exit().remove();
@@ -68,7 +68,7 @@ var mxGraph = {
         .text(function(d) { return self.util.sequences.label.format(d.y); })
         .attr('x', function(d) { return self.util.axes.x.scale(d.x); })
         .attr('y', function(d) { return self.util.axes.y.scale(d.y) - self.props.size.r*1.5; })
-        .classed('hide', function(d) { return d.show === 'no' });
+        .classed('hide', function(d) { return !d.show; });
     },
     draw: function() {
       var self = this;
@@ -86,9 +86,9 @@ var mxGraph = {
         .attr('height', props.size.h);
 
       // x & y scale
-      var xValues = rows.user.map(function(d) { return d.x; });
+      util.axes.x.values = rows.user.map(function(d) { return d.x; });
       util.axes.x.scale = d3.scalePoint()
-        .domain(xValues)
+        .domain(util.axes.x.values)
         .range([0 + props.size.p, props.size.w - props.size.p]);
       util.axes.y.scale = d3.scaleLinear()
         .domain([props.axes.y.min, props.axes.y.max])
@@ -144,9 +144,9 @@ var mxGraph = {
 
         // find point to modify
         for(var target = 0; x > util.axes.x.scale.range()[0] + util.axes.x.scale.step()*(target + 0.5); target++);
-        if(target < rows.user.length && rows.user[target].show === 'no') {
+        if(target < rows.user.length && !rows.orig[target].fix) {
           rows.user[target].y = util.axes.y.scale.invert(y);
-          rows.user[target].show = 'yes';
+          rows.user[target].show = true;
           self.drawUser();
         }
       }
