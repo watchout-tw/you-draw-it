@@ -23,19 +23,17 @@ path {
 .hide {
   visibility: hidden; }
 
-#user path, #original path {
+#user path, #orig path {
   stroke-width: 2;
   stroke: rgba(0, 0, 255, 0.25); }
-#user text, #original text {
+#user text, #orig text {
   font-size: 0.85rem;
   text-anchor: middle; }
 
 #user circle {
   fill: blue; }
-  #user circle.fix {
-    fill: lime; }
 
-#original circle {
+#orig circle {
   fill: lime; }
 
 /* Other UI elements */

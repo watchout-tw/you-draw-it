@@ -29,8 +29,8 @@ text {
   visibility: hidden;
 }
 $color-user: blue;
-$color-original: lime;
-#user, #original {
+$color-orig: lime;
+#user, #orig {
   path {
     stroke-width: 2;
     stroke: rgba(blue, 0.25);
@@ -43,14 +43,11 @@ $color-original: lime;
 #user {
   circle {
     fill: $color-user;
-    &.fix {
-      fill: $color-original;
-    }
   }
 }
-#original {
+#orig {
   circle {
-    fill: $color-original;
+    fill: $color-orig;
   }
 }
 
