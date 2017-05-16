@@ -1,3 +1,7 @@
+/* Colors */
+/* Typography */
+/* Mixin */
+/* Bootstrap breakpoint */
 /* General */
 * {
   margin: 0;
@@ -17,24 +21,31 @@ svg {
   display: block;
   margin: 0 auto; }
 
+circle {
+  fill: none; }
+
 path {
   fill: none; }
+
+text {
+  font-family: "Space Mono", monospace;
+  font-size: 0.75rem; }
 
 .hide {
   visibility: hidden; }
 
 #user path, #orig path {
-  stroke-width: 2;
-  stroke: rgba(0, 0, 255, 0.25); }
+  stroke-width: 5;
+  stroke-linejoin: round;
+  stroke-linecap: round; }
 #user text, #orig text {
-  font-size: 0.85rem;
   text-anchor: middle; }
 
-#user circle {
-  fill: blue; }
+#user path {
+  stroke: #FFB55D; }
 
-#orig circle {
-  fill: lime; }
+#orig path {
+  stroke: #FF5368; }
 
 /* Other UI elements */
 button {

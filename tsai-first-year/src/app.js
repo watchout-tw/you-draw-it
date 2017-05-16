@@ -5,11 +5,13 @@ Vue.component('graph', {
   },
   methods: {
     getSuccess: function(response) {
-      this.rows.user = response.body;
-      this.rows.orig = JSON.parse(JSON.stringify(this.rows.user));
-      this.rows.orig.forEach(function(row) {
-        row.show = 'yes'
+      this.rows.orig = response.body;
+      this.rows.user = JSON.parse(JSON.stringify(response.body))
+      this.rows.user.forEach(function(row, index, rows) {
+        if(row.fix && !(index + 1 < rows.length && !rows[index + 1].fix))
+          row.show = false;
       });
+      console.log(this.rows.user)
       this.draw();
     },
     getError: function(response) {
@@ -33,7 +35,7 @@ var app = new Vue({
   data: {
     common: CommonData,
     graphs: graphs,
-    title: '頁面大標',
+    title: '蔡總統的第一年',
     description: ['段落文字一', '段落文字二'],
   },
 });

@@ -1,3 +1,10 @@
+var colors = {
+  'bian-1': 'rgba(0, 255, 0, 0.25)',
+  'bian-2': 'rgba(0, 255, 0, 0.35)',
+  'ma-1': 'rgba(0, 0, 255, 0.25)',
+  'ma-2': 'rgba(0, 0, 255, 0.35)',
+  'tsai-1': 'rgba(0, 255, 0, 0.25)',
+};
 var mxGraph = {
   props: {
     id: String,
@@ -94,14 +101,24 @@ var mxGraph = {
         .domain([props.axes.y.min, props.axes.y.max])
         .range([props.size.h - props.size.p, 0 + props.size.p]);
 
+      util.sequences.label.format = function(d) {
+        return d3.format(props.sequences[0].label.formatString)(d/props.axes.y.divider);
+      };
+
       // function for generating path between points
       util.line = d3.line()
         .x(function(d) { return util.axes.x.scale(d.x); })
         .y(function(d) { return util.axes.y.scale(d.y); });
 
-      // draw circles & path through circles
-      this.el.user = this.el.root.append('g').attr('id', 'user');
-      this.el.orig = this.el.root.append('g').attr('id', 'orig');
+      // draw background
+      var bg = this.el.root.selectAll('rect').data(rows.user);
+      bg.exit().remove();
+      bg.enter().append('rect').merge(bg)
+        .attr('x', function(d) { return self.util.axes.x.scale(d.x) })
+        .attr('y', self.util.axes.y.scale(props.axes.y.max))
+        .attr('width', util.axes.x.scale.step())
+        .attr('height', self.util.axes.y.scale(props.axes.y.min) - self.util.axes.y.scale(props.axes.y.max))
+        .attr('fill', function(d) { return colors[d.label]; });
 
       // draw x axis
       util.axes.x.axis = d3.axisTop(util.axes.x.scale)
@@ -126,10 +143,17 @@ var mxGraph = {
         .attr('id', 'axis-y')
         .call(util.axes.y.axis);
 
+      // make space for circles and paths
+      this.el.user = this.el.root.append('g').attr('id', 'user');
+      this.el.orig = this.el.root.append('g').attr('id', 'orig');
+
       // add button to finish and show comparison
       this.$button = d3.select(this.$el).append('button')
         .text('畫好了啦')
         .on('click', function() {
+          self.rows.orig.forEach(function(row) {
+            row.show = true;
+          });
           self.drawOrig();
           self.el.root.on('mousedown', null);
           self.el.root.on('mousedown.drag', null);
@@ -155,12 +179,8 @@ var mxGraph = {
       self.el.root.on('mousedown', redraw);
       self.el.root.call(d3.drag().on('drag', redraw));
 
-      util.sequences.label.format = function(d) {
-        return d3.format(props.sequences[0].label.formatString)(d/props.axes.y.divider);
-      };
-
       // draw
-      this.drawUser();
+      this.drawOrig();
     }
   }
 }
