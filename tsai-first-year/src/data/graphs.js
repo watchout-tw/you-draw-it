@@ -63,4 +63,79 @@ var graphs = [
       after: ['沒想到', 'really?'],
     },
   },
+  {
+    id: 'public-debt',
+    sheetID: '92876274', // run get.py and get sheetID from data/graphs.json
+    axes: {
+      x: {
+        divider: 1,
+        unit: 'year',
+        label: '年',
+      },
+      y: {
+        divider: 100000000000,
+        unit: 'NTD',
+        label: '千億元',
+        min: 2000000000000,
+        max: 6000000000000,
+        formatString: '.1f',
+      }
+    },
+    nofSequences: 1,
+    title: '中央債府1年以上公共債務未償餘額',
+    text: {
+      before: ['test'],
+      after: ['qq', 'aoao?'],
+    },
+  },
+  {
+    id: 'unemployment',
+    sheetID: '541577362', // run get.py and get sheetID from data/graphs.json
+    axes: {
+      x: {
+        divider: 1,
+        unit: 'year',
+        label: '年',
+      },
+      y: {
+        divider: 1,
+        unit: '%',
+        label: '%',
+        min: 2.5,
+        max: 6.5,
+        formatString: '.1f',
+      }
+    },
+    nofSequences: 1,
+    title: '每年失業率',
+    text: {
+      before: ['test'],
+      after: ['qq', 'aoao?'],
+    },
+  },
+  {
+    id: 'annual-budget',
+    sheetID: '1456792974', // run get.py and get sheetID from data/graphs.json
+    axes: {
+      x: {
+        divider: 1,
+        unit: 'year',
+        label: '年',
+      },
+      y: {
+        divider: 100000000000,
+        unit: 'billion',
+        label: '十億元',
+        min: 1300000000000,
+        max: 2000000000000,
+        formatString: '.1f',
+      }
+    },
+    nofSequences: 2,
+    title: '各年度中央政府歲入歲出',
+    text: {
+      before: ['test'],
+      after: ['qq', 'aoao?'],
+    },
+  },
 ];
