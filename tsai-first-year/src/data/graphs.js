@@ -16,7 +16,7 @@ var graphs = [
   {
     id: 'monthly-visitors',
     sheetID: '918177893', // run get.py and get sheetID from data/graphs.json
-    size: {
+    size: { // size of graph on page & some other parameters for rendering
       w: 800,
       h: 450,
       r: 4,
