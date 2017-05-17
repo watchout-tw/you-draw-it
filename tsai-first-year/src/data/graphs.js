@@ -32,7 +32,7 @@ var graphs = [
         unit: 'person',
         label: '萬人',
         min: 0,
-        max: 800000,
+        max: 900000,
         formatString: 'd',
       }
     },
@@ -85,6 +85,117 @@ var graphs = [
     text: {
       before: ['自2000年以來，來台旅客數從balblabla'],
       after: ['沒想到', 'really?'],
+    },
+  },
+  {
+    id: 'public-debt',
+    sheetID: '92876274',
+    size: {
+      w: 800,
+      h: 450,
+      r: 4,
+    },
+    axes: {
+      x: {
+        divider: 1,
+        unit: 'year',
+        label: '年',
+      },
+      y: {
+        divider: 100000000000,
+        unit: 'NTD',
+        label: '千億元',
+        min: 2000000000000,
+        max: 6000000000000,
+        formatString: '.1f',
+      }
+    },
+    sequenceCount: 1,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
+    title: '中央債府1年以上公共債務未償餘額',
+    text: {
+      before: ['test'],
+      after: ['qq', 'aoao?'],
+    },
+  },
+  {
+    id: 'unemployment',
+    sheetID: '541577362',
+    size: {
+      w: 800,
+      h: 450,
+      r: 4,
+    },
+    axes: {
+      x: {
+        divider: 1,
+        unit: 'year',
+        label: '年',
+      },
+      y: {
+        divider: 1,
+        unit: '%',
+        label: '%',
+        min: 2.5,
+        max: 6.5,
+        formatString: '.1f',
+      }
+    },
+    sequenceCount: 1,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
+    title: '每年失業率',
+    text: {
+      before: ['test'],
+      after: ['qq', 'aoao?'],
+    },
+  },
+  {
+    id: 'annual-budget',
+    sheetID: '1456792974',
+    size: {
+      w: 800,
+      h: 450,
+      r: 4,
+    },
+    axes: {
+      x: {
+        divider: 1,
+        unit: 'year',
+        label: '年',
+      },
+      y: {
+        divider: 100000000000,
+        unit: 'billion',
+        label: '十億元',
+        min: 1300000000000,
+        max: 2000000000000,
+        formatString: '.1f',
+      }
+    },
+    sequenceCount: 2,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
+    title: '各年度中央政府歲入歲出',
+    text: {
+      before: ['test'],
+      after: ['qq', 'aoao?'],
     },
   },
 ];
