@@ -66,7 +66,7 @@ var mxGraph = {
         .attr('r', this.props.size.r)
         .attr('cx', function(d) { return self.util.axes.x.scale(d.x); })
         .attr('cy', function(d) { return self.util.axes.y.scale(d.y); })
-        .classed('fix', function(d) {return d.fix; })
+        .classed('fix', function(d) { return d.fix; })
         .classed('hide', function(d) { return !d.show; });
 
       var labels = el.selectAll('text').data(points, function(d) { return d.x; });
@@ -96,7 +96,7 @@ var mxGraph = {
       util.axes.x.values = rows.user.map(function(d) { return d.x; });
       util.axes.x.scale = d3.scalePoint()
         .domain(util.axes.x.values)
-        .range([0 + props.size.p, props.size.w - props.size.p]);
+        .range([props.size.p, props.size.w - props.size.p]);
       util.axes.y.scale = d3.scaleLinear()
         .domain([props.axes.y.min, props.axes.y.max])
         .range([props.size.h - props.size.p, 0 + props.size.p]);
@@ -111,47 +111,81 @@ var mxGraph = {
         .y(function(d) { return util.axes.y.scale(d.y); });
 
       // draw background
-      var bg = this.el.root.selectAll('rect').data(rows.user);
-      bg.exit().remove();
-      bg.enter().append('rect').merge(bg)
-        .attr('x', function(d) { return self.util.axes.x.scale(d.x) })
-        .attr('y', self.util.axes.y.scale(props.axes.y.max))
+      this.el.bg = this.el.root.append('g')
+        .attr('id', 'bg')
+        .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, 0].join(',') + ')');
+
+      var rectangles = this.el.bg.selectAll('rect').data(rows.user);
+      rectangles.exit().remove();
+      rectangles.enter().append('rect').merge(rectangles)
+        .attr('x', function(d) { return util.axes.x.scale(d.x); })
+        .attr('y', util.axes.y.scale(props.axes.y.max))
         .attr('width', util.axes.x.scale.step())
-        .attr('height', self.util.axes.y.scale(props.axes.y.min) - self.util.axes.y.scale(props.axes.y.max))
+        .attr('height', util.axes.y.scale(props.axes.y.min) - util.axes.y.scale(props.axes.y.max))
         .attr('fill', function(d) { return colors[d.label]; });
 
       // draw x axis
-      util.axes.x.axis = d3.axisTop(util.axes.x.scale)
-        .tickFormat(function(d) {
-          if(d.indexOf('/') > -1) { // yyyy/mm
+      util.axes.x.axis = d3.axisBottom(util.axes.x.scale)
+        .tickSize(props.size.h - props.size.p*2);
+      util.axes.x.customize = function(g) {
+        g.call(util.axes.x.axis);
+        g.select('.domain').remove();
+        g.selectAll('.tick').each(function(d, i, nodes) {
+          var tick = d3.select(this);
+          tick.select('line')
+
+          tick.selectAll('text').remove();
+          var text = tick.append('g')
+            .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, props.size.h - props.size.p*2].join(',') + ')');
+
+          // omit year when repeat
+          if(d.indexOf('/') > -1) {
             var [y, m] = d.split('/');
-            var target = this.parentNode.previousSibling;
-            while(!!target && $(target).text().indexOf('/') < 0) {
+            var target = this.previousSibling;
+            while(!!target && d3.select(target).datum().indexOf('/') < 0) {
               target = target.previousSibling;
             }
-            if(!!target && $(target).text().indexOf(y) > -1) {
-              d = m;
+            if(!(!!target && d3.select(target).datum().indexOf(y) > -1)) {
+              text.append('text')
+                .attr('dy', '2em')
+                .text(y);
             }
+            d = m;
           }
-          return d + (!!this.parentNode.nextSibling ? '' : props.axes.x.label); // add unit at last tick
-        });
+          text.append('text')
+            .text(d + (!this.nextSibling ? props.axes.x.label : ''))
+            .attr('dy', '1em');
+        })
+      };
       this.el.root.append('g')
         .attr('id', 'axis-x')
-        .attr('transform', 'translate(' + [0, props.size.h - 2].join(',') + ')')
-        .call(util.axes.x.axis);
+        .attr('transform', 'translate(' + [0, props.size.p].join(',') + ')')
+        .call(util.axes.x.customize);
 
       // draw y axis
       util.axes.y.format = function(d) {
         return d3.format(props.axes.y.formatString)(d/props.axes.y.divider);
       };
-      util.axes.y.axis = d3.axisRight(util.axes.y.scale)
+      util.axes.y.axis = d3.axisLeft(util.axes.y.scale)
+        .tickSize(0)
         .tickFormat(function(d) {
           // format + unit at last tick
-          return util.axes.y.format(d) + (this.parentNode.nextSibling ? '' : props.axes.y.label);
+          return util.axes.y.format(d);
         });
+      util.axes.y.customize = function(g) {
+        g.call(util.axes.y.axis);
+        g.select('.domain').remove();
+        g.select('.tick:last-of-type').append('text')
+          .classed('unit-label', true)
+          .attr('x', -3)
+          .attr('y', 0.5)
+          .attr('dy', '0.32em')
+          .text(props.axes.y.label);
+      };
       this.el.root.append('g')
         .attr('id', 'axis-y')
-        .call(util.axes.y.axis);
+        .attr('transform', 'translate(' + [props.size.p, 0].join(',') + ')')
+        .call(util.axes.y.customize);
 
       // make space for circles and paths
       this.el.user = this.el.root.append('g').attr('id', 'user');

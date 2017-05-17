@@ -30,6 +30,14 @@ path {
 text {
   font-family: "Space Mono", monospace;
   font-size: 0.75rem; }
+  text.unit-label {
+    text-anchor: start; }
+
+.tick text {
+  fill: rgba(0, 0, 0, 0.25); }
+.tick line {
+  stroke: rgba(0, 0, 0, 0.13);
+  stroke-dasharray: 2,2; }
 
 .hide {
   visibility: hidden; }

@@ -31,6 +31,19 @@ path {
 text {
   @include font-monospace;
   font-size: 0.75rem;
+
+  &.unit-label {
+    text-anchor: start;
+  }
+}
+.tick {
+  text {
+    fill: rgba(black, 0.25);
+  }
+  line {
+    stroke: rgba(black, 0.13);
+    stroke-dasharray: 2,2;
+  }
 }
 .hide {
   visibility: hidden;
