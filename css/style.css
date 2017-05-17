@@ -20,7 +20,11 @@ body {
 /* Graph */
 .graph {
   max-width: 30rem;
-  margin: 0 auto; }
+  margin: 4rem auto; }
+  .graph > .after {
+    visibility: hidden; }
+    .graph > .after.show {
+      visibility: visible; }
 
 svg {
   cursor: pointer;

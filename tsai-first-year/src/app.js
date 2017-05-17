@@ -22,9 +22,13 @@ Vue.component('graph', {
   template: `
   <div class="graph" :id="props.id">
     <h2>{{ props.title }}</h2>
-    <p v-for="paragraph in props.text.before">{{ paragraph }}</p>
+    <div class="before">
+      <p v-for="paragraph in props.text.before">{{ paragraph }}</p>
+    </div>
     <div class="draw"></div>
-    <p v-for="paragraph in props.text.after">{{ paragraph }}</p>
+    <div class="after">
+      <p v-for="paragraph in props.text.after">{{ paragraph }}</p>
+    </div>
   </div>
   `,
 });

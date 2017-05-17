@@ -210,12 +210,14 @@ var mxGraph = {
           self.drawOrig();
           self.el.root.on('mousedown', null);
           self.el.root.on('mousedown.drag', null);
+
+          $(self.$el).find('.after').addClass('show');
         });
 
       // make callback to redraw at user input
       function redraw() {
         self.el.button.text('畫好了啦');
-        
+
         // get input position
         var m = d3.mouse(this);
         var x = m[0];
