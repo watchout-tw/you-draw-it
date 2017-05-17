@@ -32,7 +32,7 @@ var graphs = [
         unit: 'person',
         label: '萬人',
         min: 0,
-        max: 800000,
+        max: 900000,
         formatString: 'd',
       }
     },
@@ -110,7 +110,14 @@ var graphs = [
         formatString: '.1f',
       }
     },
-    nofSequences: 1,
+    sequenceCount: 1,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
     title: '中央債府1年以上公共債務未償餘額',
     text: {
       before: ['test'],
@@ -140,7 +147,14 @@ var graphs = [
         formatString: '.1f',
       }
     },
-    nofSequences: 1,
+    sequenceCount: 1,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
     title: '每年失業率',
     text: {
       before: ['test'],
@@ -149,7 +163,7 @@ var graphs = [
   },
   {
     id: 'annual-budget',
-    sheetID: '1456792974', 
+    sheetID: '1456792974',
     size: {
       w: 800,
       h: 450,
@@ -170,7 +184,14 @@ var graphs = [
         formatString: '.1f',
       }
     },
-    nofSequences: 2,
+    sequenceCount: 2,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
     title: '各年度中央政府歲入歲出',
     text: {
       before: ['test'],
