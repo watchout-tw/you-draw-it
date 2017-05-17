@@ -69,12 +69,15 @@ var mxGraph = {
         .classed('fix', function(d) { return d.fix; })
         .classed('hide', function(d) { return !d.show; });
 
-      var labels = el.selectAll('text').data(points, function(d) { return d.x; });
+      var endpoints = segments.reduce(function(acc, cur) {
+        return acc.concat([cur[0], cur[cur.length - 1]]);
+      }, []);
+      var labels = el.selectAll('text').data(endpoints, function(d) { return d.x; });
       labels.exit().remove();
       labels.enter().append('text').merge(labels)
         .text(function(d) { return self.util.sequences.label.format(d.y); })
         .attr('x', function(d) { return self.util.axes.x.scale(d.x); })
-        .attr('y', function(d) { return self.util.axes.y.scale(d.y) - self.props.size.r*1.5; })
+        .attr('y', function(d) { return self.util.axes.y.scale(d.y) - self.props.size.r*2; })
         .classed('hide', function(d) { return !d.show; });
     },
     draw: function() {
