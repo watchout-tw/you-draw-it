@@ -66,15 +66,18 @@ var mxGraph = {
         .attr('r', this.props.size.r)
         .attr('cx', function(d) { return self.util.axes.x.scale(d.x); })
         .attr('cy', function(d) { return self.util.axes.y.scale(d.y); })
-        .classed('fix', function(d) {return d.fix; })
+        .classed('fix', function(d) { return d.fix; })
         .classed('hide', function(d) { return !d.show; });
 
-      var labels = el.selectAll('text').data(points, function(d) { return d.x; });
+      var endpoints = segments.reduce(function(acc, cur) {
+        return acc.concat([cur[0], cur[cur.length - 1]]);
+      }, []);
+      var labels = el.selectAll('text').data(endpoints, function(d) { return d.x; });
       labels.exit().remove();
       labels.enter().append('text').merge(labels)
         .text(function(d) { return self.util.sequences.label.format(d.y); })
         .attr('x', function(d) { return self.util.axes.x.scale(d.x); })
-        .attr('y', function(d) { return self.util.axes.y.scale(d.y) - self.props.size.r*1.5; })
+        .attr('y', function(d) { return self.util.axes.y.scale(d.y) - self.props.size.r*2; })
         .classed('hide', function(d) { return !d.show; });
     },
     draw: function() {
@@ -83,20 +86,25 @@ var mxGraph = {
       var util = this.util;
       var rows = this.rows;
 
-      // calculate padding
+      // calculations
+      props.size.w = 480;
+      props.size.h = 480;
+
+      props.size.a = props.size.h/props.size.w;
       props.size.p = props.size.r*8;
 
       // make graph
-      this.el.root = d3.select(this.$el).select('.draw')
-        .append('svg')
-        .attr('width', props.size.w)
-        .attr('height', props.size.h);
+      this.el.$container = $(this.$el).find('.draw');
+      this.el.container = d3.select(this.$el).select('.draw');
+      this.el.root = this.el.container.append('svg')
+
+        .attr('viewBox', [0, 0, props.size.w, props.size.h].join(' '));
 
       // x & y scale
       util.axes.x.values = rows.user.map(function(d) { return d.x; });
       util.axes.x.scale = d3.scalePoint()
         .domain(util.axes.x.values)
-        .range([0 + props.size.p, props.size.w - props.size.p]);
+        .range([props.size.p, props.size.w - props.size.p]);
       util.axes.y.scale = d3.scaleLinear()
         .domain([props.axes.y.min, props.axes.y.max])
         .range([props.size.h - props.size.p, 0 + props.size.p]);
@@ -111,55 +119,90 @@ var mxGraph = {
         .y(function(d) { return util.axes.y.scale(d.y); });
 
       // draw background
-      var bg = this.el.root.selectAll('rect').data(rows.user);
-      bg.exit().remove();
-      bg.enter().append('rect').merge(bg)
-        .attr('x', function(d) { return self.util.axes.x.scale(d.x) })
-        .attr('y', self.util.axes.y.scale(props.axes.y.max))
+      this.el.bg = this.el.root.append('g')
+        .attr('class', 'bg')
+        .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, 0].join(',') + ')');
+
+      var rectangles = this.el.bg.selectAll('rect').data(rows.user);
+      rectangles.exit().remove();
+      rectangles.enter().append('rect').merge(rectangles)
+        .attr('x', function(d) { return util.axes.x.scale(d.x); })
+        .attr('y', util.axes.y.scale(props.axes.y.max))
         .attr('width', util.axes.x.scale.step())
-        .attr('height', self.util.axes.y.scale(props.axes.y.min) - self.util.axes.y.scale(props.axes.y.max))
+        .attr('height', util.axes.y.scale(props.axes.y.min) - util.axes.y.scale(props.axes.y.max))
         .attr('fill', function(d) { return colors[d.label]; });
 
       // draw x axis
-      util.axes.x.axis = d3.axisTop(util.axes.x.scale)
-        .tickFormat(function(d) {
-          if(d.indexOf('/') > -1) { // yyyy/mm
+      util.axes.x.axis = d3.axisBottom(util.axes.x.scale)
+        .tickSize(props.size.h - props.size.p*2);
+      util.axes.x.customize = function(g) {
+        g.call(util.axes.x.axis);
+        g.select('.domain').remove();
+        g.selectAll('.tick').each(function(d, i, nodes) {
+          var tick = d3.select(this);
+          tick.select('line')
+
+          tick.selectAll('text').remove();
+          var text = tick.append('g')
+            .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, props.size.h - props.size.p - props.size.r*8].join(',') + ')');
+
+          // omit year when repeat
+          if(d.indexOf('/') > -1) {
             var [y, m] = d.split('/');
-            var target = this.parentNode.previousSibling;
-            while(!!target && $(target).text().indexOf('/') < 0) {
+            var target = this.previousSibling;
+            while(!!target && d3.select(target).datum().indexOf('/') < 0) {
               target = target.previousSibling;
             }
-            if(!!target && $(target).text().indexOf(y) > -1) {
-              d = m;
+            if(!(!!target && d3.select(target).datum().indexOf(y) > -1)) {
+              text.append('text')
+                .attr('dy', '2em')
+                .text(y);
             }
+            d = m;
           }
-          return d + (!!this.parentNode.nextSibling ? '' : props.axes.x.label); // add unit at last tick
-        });
+          if(d%2 == 0)
+            return;
+          text.append('text')
+            .text(d + (!this.nextSibling ? props.axes.x.label : ''))
+            .attr('dy', '1em');
+        })
+      };
       this.el.root.append('g')
-        .attr('id', 'axis-x')
-        .attr('transform', 'translate(' + [0, props.size.h - 2].join(',') + ')')
-        .call(util.axes.x.axis);
+        .attr('class', 'axis axis-x')
+        .attr('transform', 'translate(' + [0, props.size.p].join(',') + ')')
+        .call(util.axes.x.customize);
 
       // draw y axis
       util.axes.y.format = function(d) {
         return d3.format(props.axes.y.formatString)(d/props.axes.y.divider);
       };
       util.axes.y.axis = d3.axisRight(util.axes.y.scale)
+        .tickSize(0)
         .tickFormat(function(d) {
           // format + unit at last tick
-          return util.axes.y.format(d) + (this.parentNode.nextSibling ? '' : props.axes.y.label);
+          return util.axes.y.format(d);
         });
+      util.axes.y.customize = function(g) {
+        g.call(util.axes.y.axis);
+        g.select('.domain').remove();
+        g.selectAll('.tick > text')
+          .attr('x', 0)
+        g.select('.tick:last-of-type').append('text')
+          .classed('unit-label', true)
+          .attr('dy', '-1em')
+          .text(props.axes.y.label);
+      };
       this.el.root.append('g')
-        .attr('id', 'axis-y')
-        .call(util.axes.y.axis);
+        .attr('class', 'axis axis-y')
+        .call(util.axes.y.customize);
 
       // make space for circles and paths
-      this.el.user = this.el.root.append('g').attr('id', 'user');
-      this.el.orig = this.el.root.append('g').attr('id', 'orig');
+      this.el.user = this.el.root.append('g').attr('class', 'sequence user');
+      this.el.orig = this.el.root.append('g').attr('class', 'sequence orig');
 
       // add button to finish and show comparison
-      this.$button = d3.select(this.$el).append('button')
-        .text('畫好了啦')
+      this.el.button = this.el.container.append('button')
+        .text('不想畫啦')
         .on('click', function() {
           self.rows.orig.forEach(function(row) {
             row.show = true;
@@ -167,10 +210,14 @@ var mxGraph = {
           self.drawOrig();
           self.el.root.on('mousedown', null);
           self.el.root.on('mousedown.drag', null);
+
+          $(self.$el).find('.after').addClass('show');
         });
 
       // make callback to redraw at user input
       function redraw() {
+        self.el.button.text('畫好了啦');
+
         // get input position
         var m = d3.mouse(this);
         var x = m[0];
