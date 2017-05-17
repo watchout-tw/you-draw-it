@@ -84,7 +84,7 @@ var mxGraph = {
       var rows = this.rows;
 
       // calculate padding
-      props.size.p = props.size.r*8;
+      props.size.p = props.size.r*10;
 
       // make graph
       this.el.root = d3.select(this.$el).select('.draw')
@@ -166,7 +166,7 @@ var mxGraph = {
       util.axes.y.format = function(d) {
         return d3.format(props.axes.y.formatString)(d/props.axes.y.divider);
       };
-      util.axes.y.axis = d3.axisLeft(util.axes.y.scale)
+      util.axes.y.axis = d3.axisRight(util.axes.y.scale)
         .tickSize(0)
         .tickFormat(function(d) {
           // format + unit at last tick
@@ -177,14 +177,12 @@ var mxGraph = {
         g.select('.domain').remove();
         g.select('.tick:last-of-type').append('text')
           .classed('unit-label', true)
-          .attr('x', -3)
-          .attr('y', 0.5)
-          .attr('dy', '0.32em')
+          .attr('dy', '-1em')
           .text(props.axes.y.label);
       };
       this.el.root.append('g')
         .attr('id', 'axis-y')
-        .attr('transform', 'translate(' + [props.size.p, 0].join(',') + ')')
+        .attr('transform', 'translate(' + [0, 0].join(',') + ')')
         .call(util.axes.y.customize);
 
       // make space for circles and paths
