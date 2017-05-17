@@ -32,11 +32,18 @@ var graphs = [
         unit: 'person',
         label: '萬人',
         min: 0,
-        max: 500000,
-        formatString: '.1f',
+        max: 800000,
+        formatString: 'd',
       }
     },
-    nofSequences: 2,
+    sequenceCount: 2,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
     title: '每月來台旅客人數',
     text: {
       before: ['lalala'],
@@ -61,12 +68,19 @@ var graphs = [
         divider: 1000000,
         unit: 'person',
         label: '百萬人',
-        min: 2000000,
+        min: 0,
         max: 12000000,
-        formatString: '.1f',
+        formatString: 'd',
       }
     },
-    nofSequences: 1,
+    sequenceCount: 1,
+    sequences: [
+      {
+        label: {
+          formatString: '.1f',
+        }
+      }
+    ],
     title: '每年來台旅客人數',
     text: {
       before: ['自2000年以來，來台旅客數從balblabla'],

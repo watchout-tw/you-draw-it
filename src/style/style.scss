@@ -1,3 +1,5 @@
+@import 'wormhole/variables';
+
 /* General */
 
 * {
@@ -20,37 +22,39 @@ svg {
   display: block;
   margin: 0 auto;
 }
+circle {
+  fill: none;
+}
 path {
   fill: none;
 }
 text {
+  @include font-monospace;
+  font-size: 0.75rem;
 }
 .hide {
   visibility: hidden;
 }
 $color-user: blue;
-$color-original: lime;
-#user, #original {
+$color-orig: lime;
+#user, #orig {
   path {
-    stroke-width: 2;
-    stroke: rgba(blue, 0.25);
+    stroke-width: 5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
   }
   text {
-    font-size: 0.85rem;
     text-anchor: middle;
   }
 }
 #user {
-  circle {
-    fill: $color-user;
-    &.fix {
-      fill: $color-original;
-    }
+  path {
+    stroke: $color-park;
   }
 }
-#original {
-  circle {
-    fill: $color-original;
+#orig {
+  path {
+    stroke: $color-musou;
   }
 }
 
