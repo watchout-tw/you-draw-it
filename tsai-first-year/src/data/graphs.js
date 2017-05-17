@@ -75,7 +75,12 @@ var graphs = [
   },
   {
     id: 'public-debt',
-    sheetID: '92876274', // run get.py and get sheetID from data/graphs.json
+    sheetID: '92876274',
+    size: {
+      w: 800,
+      h: 450,
+      r: 4,
+    },
     axes: {
       x: {
         divider: 1,
@@ -100,7 +105,12 @@ var graphs = [
   },
   {
     id: 'unemployment',
-    sheetID: '541577362', // run get.py and get sheetID from data/graphs.json
+    sheetID: '541577362',
+    size: {
+      w: 800,
+      h: 450,
+      r: 4,
+    },
     axes: {
       x: {
         divider: 1,
@@ -125,7 +135,12 @@ var graphs = [
   },
   {
     id: 'annual-budget',
-    sheetID: '1456792974', // run get.py and get sheetID from data/graphs.json
+    sheetID: '1456792974', 
+    size: {
+      w: 800,
+      h: 450,
+      r: 4,
+    },
     axes: {
       x: {
         divider: 1,
