@@ -27,6 +27,9 @@ var mxGraph = {
     }
   },
   methods: {
+    drawComp: function(i) {
+      this.drawPath(this.el.comp[i], this.rows.comp[i]);
+    },
     drawUser: function() {
       this.drawPath(this.el.user, this.rows.user);
     },
@@ -82,12 +85,10 @@ var mxGraph = {
         .attr('y', function(d) { return self.util.axes.y.scale(d.y) - self.size.r*2; })
         .classed('hide', function(d) { return !d.show; });
     },
-    draw: function() {
-      var self = this;
-      var props = this.props;
+    init: function() {
       var size = this.size;
-      var rows = this.rows;
       var util = this.util;
+      var props = this.props;
 
       // calculations
       size.w = 480;
@@ -96,14 +97,12 @@ var mxGraph = {
       size.a = size.h/size.w;
       size.p = size.r*8;
 
-      // make graph
+      // containers
       this.el.$container = $(this.$el).find('.draw');
       this.el.container = d3.select(this.$el).select('.draw');
-      this.el.root = this.el.container.append('svg')
-        .attr('viewBox', [0, 0, size.w, size.h].join(' '));
 
       // x & y scale
-      util.axes.x.values = rows.user.map(function(d) { return d.x; });
+      util.axes.x.values = this.rows.user.map(function(d) { return d.x; });
       util.axes.x.scale = d3.scalePoint()
         .domain(util.axes.x.values)
         .range([size.p, size.w - size.p]);
@@ -120,21 +119,7 @@ var mxGraph = {
         .x(function(d) { return util.axes.x.scale(d.x); })
         .y(function(d) { return util.axes.y.scale(d.y); });
 
-      // draw background
-      this.el.bg = this.el.root.append('g')
-        .attr('class', 'bg')
-        .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, 0].join(',') + ')');
-
-      var rectangles = this.el.bg.selectAll('rect').data(rows.user);
-      rectangles.exit().remove();
-      rectangles.enter().append('rect').merge(rectangles)
-        .attr('x', function(d) { return util.axes.x.scale(d.x); })
-        .attr('y', util.axes.y.scale(props.axes.y.max))
-        .attr('width', util.axes.x.scale.step())
-        .attr('height', util.axes.y.scale(props.axes.y.min) - util.axes.y.scale(props.axes.y.max))
-        .attr('fill', function(d) { return colors[d.label]; });
-
-      // draw x axis
+      // x axis
       util.axes.x.axis = d3.axisBottom(util.axes.x.scale)
         .tickSize(size.h - size.p*2);
       util.axes.x.customize = function(g) {
@@ -169,12 +154,8 @@ var mxGraph = {
             .attr('dy', '1em');
         })
       };
-      this.el.root.append('g')
-        .attr('class', 'axis axis-x')
-        .attr('transform', 'translate(' + [0, size.p].join(',') + ')')
-        .call(util.axes.x.customize);
 
-      // draw y axis
+      // y axis
       util.axes.y.format = function(d) {
         return d3.format(props.axes.y.formatString)(d/props.axes.y.divider);
       };
@@ -194,11 +175,47 @@ var mxGraph = {
           .attr('dy', '-1em')
           .text(props.axes.y.label);
       };
-      this.el.root.append('g')
+    },
+    draw: function() {
+      var self = this;
+
+      this.el.root = this.el.container.append('svg')
+        .attr('viewBox', [0, 0, this.size.w, this.size.h].join(' '));
+
+      // draw background
+      this.el.bg = this.el.root.append('g')
+        .attr('class', 'bg')
+        .attr('transform', 'translate(' + [-this.util.axes.x.scale.step()/2, 0].join(',') + ')');
+
+      var rectangles = this.el.bg.selectAll('rect').data(this.rows.user);
+      rectangles.exit().remove();
+      rectangles.enter().append('rect').merge(rectangles)
+        .attr('x', function(d) { return self.util.axes.x.scale(d.x); })
+        .attr('y', this.util.axes.y.scale(this.props.axes.y.max))
+        .attr('width', this.util.axes.x.scale.step())
+        .attr('height', this.util.axes.y.scale(this.props.axes.y.min) - this.util.axes.y.scale(this.props.axes.y.max))
+        .attr('fill', function(d) { return colors[d.label]; });
+
+      // draw x axis
+      this.el.x = this.el.root.append('g')
+        .attr('class', 'axis axis-x')
+        .attr('transform', 'translate(' + [0, this.size.p].join(',') + ')')
+        .call(this.util.axes.x.customize);
+
+      // draw y axis
+      this.el.y = this.el.root.append('g')
         .attr('class', 'axis axis-y')
-        .call(util.axes.y.customize);
+        .call(this.util.axes.y.customize);
 
       // make space for circles and paths
+      if(!!this.props.compare) {
+        self.el.comp = [];
+        this.props.compare.forEach(function(compID, i) {
+          var comp = self.el.root.append('g').attr('class', 'sequence comp');
+          self.el.comp.push(comp);
+          self.drawComp(i);
+        });
+      }
       this.el.user = this.el.root.append('g').attr('class', 'sequence user');
       this.el.orig = this.el.root.append('g').attr('class', 'sequence orig');
 
@@ -223,22 +240,22 @@ var mxGraph = {
         // get input position
         var m = d3.mouse(this);
         var x = m[0];
-        var y = Math.max(size.p, Math.min(m[1], size.h - size.p));
+        var y = Math.max(self.size.p, Math.min(m[1], self.size.h - self.size.p));
 
         // find point to modify
-        for(var target = 0; x > util.axes.x.scale.range()[0] + util.axes.x.scale.step()*(target + 0.5); target++);
-        if(target < rows.user.length && !rows.orig[target].fix) {
-          rows.user[target].y = util.axes.y.scale.invert(y);
-          rows.user[target].show = true;
+        for(var target = 0; x > self.util.axes.x.scale.range()[0] + self.util.axes.x.scale.step()*(target + 0.5); target++);
+        if(target < self.rows.user.length && !self.rows.orig[target].fix) {
+          self.rows.user[target].y = self.util.axes.y.scale.invert(y);
+          self.rows.user[target].show = true;
           self.drawUser();
         }
       }
 
       // execute callback on click/touch/drag
-      self.el.root.on('mousedown', redraw);
-      self.el.root.call(d3.drag().on('drag', redraw));
+      this.el.root.on('mousedown', redraw);
+      this.el.root.call(d3.drag().on('drag', redraw));
 
-      // draw
+      // draw original sequence
       this.drawOrig();
     }
   }

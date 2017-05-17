@@ -71,6 +71,8 @@ svg {
     stroke-linecap: round; }
   svg .sequence text {
     text-anchor: middle; }
+  svg .sequence.comp path {
+    stroke: rgba(0, 0, 0, 0.25); }
   svg .sequence.user path {
     stroke: #FFB55D; }
   svg .sequence.orig path {

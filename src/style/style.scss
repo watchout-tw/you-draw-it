@@ -96,6 +96,11 @@ svg {
     text {
       text-anchor: middle;
     }
+    &.comp {
+      path {
+        stroke: rgba(black, 0.25); //rgb(89, 89, 225);
+      }
+    }
     &.user {
       path {
         stroke: $color-park;

@@ -11,16 +11,6 @@ object = {
 graphs is an array
 each object in graphs contains information of each graph
 */
-var relations = [
-  [
-    'monthly-visitors-china',
-    'monthly-visitors-world',
-  ],
-  [
-    'annual-revenue',
-    'annual-spending',
-  ],
-]
 var graphs = [
   {
     id: 'monthly-visitors-china',
@@ -75,6 +65,7 @@ var graphs = [
         formatString: '.1f',
       }
     },
+    compare: ['monthly-visitors-china'],
     text: {
       before: ['lalala'],
       after: ['hahaha', 'paragraph'],
@@ -222,6 +213,7 @@ var graphs = [
         formatString: '.2f',
       }
     },
+    compare: ['annual-revenue'],
     text: {
       before: ['test'],
       after: ['qq', 'aoao?'],
