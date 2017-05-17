@@ -136,7 +136,7 @@ var mxGraph = {
 
           tick.selectAll('text').remove();
           var text = tick.append('g')
-            .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, props.size.h - props.size.p*2].join(',') + ')');
+            .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, props.size.h - props.size.p - props.size.r*8].join(',') + ')');
 
           // omit year when repeat
           if(d.indexOf('/') > -1) {
@@ -175,6 +175,8 @@ var mxGraph = {
       util.axes.y.customize = function(g) {
         g.call(util.axes.y.axis);
         g.select('.domain').remove();
+        g.selectAll('.tick > text')
+          .attr('x', 0)
         g.select('.tick:last-of-type').append('text')
           .classed('unit-label', true)
           .attr('dy', '-1em')
@@ -182,7 +184,6 @@ var mxGraph = {
       };
       this.el.root.append('g')
         .attr('id', 'axis-y')
-        .attr('transform', 'translate(' + [0, 0].join(',') + ')')
         .call(util.axes.y.customize);
 
       // make space for circles and paths
