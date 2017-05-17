@@ -27,19 +27,10 @@ for graphID, sheetID in sheets.items():
     rows = list(reader)
 
     dump = []
-    if(graphID == 'graphs'):
-        for row in rows:
-            thisID = row['graphID']
-            clone = {
-                'id': thisID,
-                'sheetID': sheets[thisID],
-            }
-            dump.append(clone)
-    else:
+    if(graphID != 'graphs'):
         # dump = [row for row in rows]
         for row in rows:
             row['fix'] = row['show'] = True if row['show'] == 'yes' else False
             dump.append(row)
-
-    with open('data/' + graphID + '.json', 'w+', encoding='utf-8') as f:
-        json.dump(dump, f, indent=4, ensure_ascii=False)
+        with open('data/' + graphID + '.json', 'w+', encoding='utf-8') as f:
+            json.dump(dump, f, indent=4, ensure_ascii=False)

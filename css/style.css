@@ -22,9 +22,29 @@ body {
   max-width: 30rem;
   margin: 4rem auto; }
   .graph > .after {
-    visibility: hidden; }
-    .graph > .after.show {
+    position: relative;
+    margin-top: 1rem; }
+    .graph > .after > p {
+      visibility: hidden; }
+    .graph > .after.reveal > button {
+      display: none; }
+    .graph > .after.reveal > p {
       visibility: visible; }
+    .graph > .after > button {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: block;
+      padding: 0.5rem 1rem;
+      background: #FF5368;
+      border-radius: 2px;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+      cursor: pointer; }
+      .graph > .after > button:active, .graph > .after > button:focus {
+        outline: none; }
 
 svg {
   cursor: pointer;
@@ -58,20 +78,5 @@ svg {
   @media (max-width: 575px) {
     svg .axis-y {
       display: none; } }
-
-/* Other UI elements */
-button {
-  display: block;
-  width: 6rem;
-  margin: 0.25rem auto;
-  padding: 0.5rem 0;
-  background: #FF5368;
-  border-radius: 2px;
-  color: white;
-  font-size: 1rem;
-  text-align: center;
-  cursor: pointer; }
-  button:active, button:focus {
-    outline: none; }
 
 /*# sourceMappingURL=style.css.map */

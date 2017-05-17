@@ -24,13 +24,16 @@
   <div id="app">
     <nav-bar-simple :channel="common.channels.musou"></nav-bar-simple>
     <header>
-      <h1>{{ title }}</h1>
+      <hgroup>
+        <h2>不然你來畫畫看啊</h2>
+        <h1>{{ title }}</h1>
+      </hgroup>
       <div class="pgroup">
         <p v-for="p in description">{{ p }}</p>
       </div>
     </header>
     <section id="graphs">
-      <graph v-for="graphProps in graphs" :key="graphProps.id" :props="graphProps"></graph>
+      <graph v-for="props in graphs" :key="props.id" :props="props"></graph>
     </section>
   </div><!-- end of app -->
   <footer></footer>

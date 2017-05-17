@@ -24,9 +24,38 @@ $max-width: 30rem;
   margin: 4rem auto;
 
   > .after {
-    visibility: hidden;
-    &.show {
+    position: relative;
+    margin-top: 1rem;
+
+    > p {
+      visibility: hidden;
+    }
+    &.reveal {
+      > button {
+        display: none;
+      }
+      > p {
         visibility: visible;
+      }
+    }
+
+    > button {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: block;
+      padding: 0.5rem 1rem;
+      background: $color-musou;
+      border-radius: 2px;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+      cursor: pointer;
+
+      &:active, &:focus {
+        outline: none;
+      }
     }
   }
 }
@@ -82,24 +111,5 @@ svg {
     @include bp-sm-only {
       display: none;
     }
-  }
-}
-
-/* Other UI elements */
-
-button {
-  display: block;
-  width: 6rem;
-  margin: 0.25rem auto;
-  padding: 0.5rem 0;
-  background: $color-musou;
-  border-radius: 2px;
-  color: white;
-  font-size: 1rem;
-  text-align: center;
-  cursor: pointer;
-
-  &:active, &:focus {
-    outline: none;
   }
 }
