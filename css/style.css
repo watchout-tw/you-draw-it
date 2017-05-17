@@ -12,57 +12,60 @@ body {
   font-family: sans-serif;
   font-size: 16px; }
 
+.draw {
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto; }
+
 /* Graph */
 .graph {
-  text-align: center; }
+  max-width: 30rem;
+  margin: 0 auto; }
 
 svg {
   cursor: pointer;
-  display: block;
-  margin: 0 auto; }
-
-circle {
-  fill: none; }
-
-path {
-  fill: none; }
-
-text {
-  font-family: "Space Mono", monospace;
-  font-size: 0.75rem; }
-  text.unit-label {
-    text-anchor: start; }
-
-.tick text {
-  fill: rgba(0, 0, 0, 0.25); }
-.tick line {
-  stroke: rgba(0, 0, 0, 0.13);
-  stroke-dasharray: 2,2; }
-
-.hide {
-  visibility: hidden; }
-
-#user path, #orig path {
-  stroke-width: 5;
-  stroke-linejoin: round;
-  stroke-linecap: round; }
-#user text, #orig text {
-  text-anchor: middle; }
-
-#user path {
-  stroke: #FFB55D; }
-
-#orig path {
-  stroke: #FF5368; }
+  display: block; }
+  svg circle {
+    fill: none; }
+  svg path {
+    fill: none; }
+  svg text {
+    font-family: "Space Mono", monospace;
+    font-size: 0.75rem; }
+    svg text.unit-label {
+      text-anchor: start; }
+  svg .hide {
+    visibility: hidden; }
+  svg .tick text {
+    fill: rgba(0, 0, 0, 0.25); }
+  svg .tick line {
+    stroke: rgba(0, 0, 0, 0.13);
+    stroke-dasharray: 2,2; }
+  svg .sequence path {
+    stroke-width: 5;
+    stroke-linejoin: round;
+    stroke-linecap: round; }
+  svg .sequence text {
+    text-anchor: middle; }
+  svg .sequence.user path {
+    stroke: #FFB55D; }
+  svg .sequence.orig path {
+    stroke: #FF5368; }
+  @media (max-width: 575px) {
+    svg .axis-y {
+      display: none; } }
 
 /* Other UI elements */
 button {
-  margin: 0.25rem;
-  padding: 0.5rem;
-  background: rgba(0, 0, 0, 0.25);
+  display: block;
+  width: 6rem;
+  margin: 0.25rem auto;
+  padding: 0.5rem 0;
+  background: #FF5368;
   border-radius: 2px;
-  text-align: center;
+  color: white;
   font-size: 1rem;
+  text-align: center;
   cursor: pointer; }
   button:active, button:focus {
     outline: none; }

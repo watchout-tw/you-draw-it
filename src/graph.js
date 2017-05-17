@@ -86,14 +86,19 @@ var mxGraph = {
       var util = this.util;
       var rows = this.rows;
 
-      // calculate padding
-      props.size.p = props.size.r*10;
+      // calculations
+      props.size.w = 480;
+      props.size.h = 480;
+
+      props.size.a = props.size.h/props.size.w;
+      props.size.p = props.size.r*8;
 
       // make graph
-      this.el.root = d3.select(this.$el).select('.draw')
-        .append('svg')
-        .attr('width', props.size.w)
-        .attr('height', props.size.h);
+      this.el.$container = $(this.$el).find('.draw');
+      this.el.container = d3.select(this.$el).select('.draw');
+      this.el.root = this.el.container.append('svg')
+
+        .attr('viewBox', [0, 0, props.size.w, props.size.h].join(' '));
 
       // x & y scale
       util.axes.x.values = rows.user.map(function(d) { return d.x; });
@@ -115,7 +120,7 @@ var mxGraph = {
 
       // draw background
       this.el.bg = this.el.root.append('g')
-        .attr('id', 'bg')
+        .attr('class', 'bg')
         .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, 0].join(',') + ')');
 
       var rectangles = this.el.bg.selectAll('rect').data(rows.user);
@@ -155,13 +160,15 @@ var mxGraph = {
             }
             d = m;
           }
+          if(d%2 == 0)
+            return;
           text.append('text')
             .text(d + (!this.nextSibling ? props.axes.x.label : ''))
             .attr('dy', '1em');
         })
       };
       this.el.root.append('g')
-        .attr('id', 'axis-x')
+        .attr('class', 'axis axis-x')
         .attr('transform', 'translate(' + [0, props.size.p].join(',') + ')')
         .call(util.axes.x.customize);
 
@@ -186,16 +193,16 @@ var mxGraph = {
           .text(props.axes.y.label);
       };
       this.el.root.append('g')
-        .attr('id', 'axis-y')
+        .attr('class', 'axis axis-y')
         .call(util.axes.y.customize);
 
       // make space for circles and paths
-      this.el.user = this.el.root.append('g').attr('id', 'user');
-      this.el.orig = this.el.root.append('g').attr('id', 'orig');
+      this.el.user = this.el.root.append('g').attr('class', 'sequence user');
+      this.el.orig = this.el.root.append('g').attr('class', 'sequence orig');
 
       // add button to finish and show comparison
-      this.$button = d3.select(this.$el).append('button')
-        .text('畫好了啦')
+      this.el.button = this.el.container.append('button')
+        .text('不想畫啦')
         .on('click', function() {
           self.rows.orig.forEach(function(row) {
             row.show = true;
@@ -207,6 +214,8 @@ var mxGraph = {
 
       // make callback to redraw at user input
       function redraw() {
+        self.el.button.text('畫好了啦');
+        
         // get input position
         var m = d3.mouse(this);
         var x = m[0];
