@@ -12,6 +12,12 @@ body {
   font-family: sans-serif;
   font-size: 16px; }
 
+.authorship > .item > .job {
+  width: 4rem;
+  margin-right: 1rem; }
+.authorship > .item > .person:not(:last-of-type) {
+  margin-right: 1rem; }
+
 .draw {
   position: relative;
   width: 100%;

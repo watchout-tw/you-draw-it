@@ -56,6 +56,23 @@ var app = new Vue({
     common: CommonData,
     graphs: graphs,
     title: '蔡總統的第一年',
-    description: '文字',
+    description: '蔡英文政府已執政滿一週年，跟過去幾年相比，到底表現好不好呢？沃草透過比較從扁政府、馬政府到蔡政府第一年的各項數據，先讓大家自己畫出心中的感受，再來看看你跟真實數據的差異有多少吧！',
+    authorship: [
+      {
+        job: '數據分析',
+        people: ['洪國鈞'],
+      },
+      {
+        job: '編輯',
+        people: ['蕭長展', '洪國鈞'],
+      },
+      {
+        job: '設計開發',
+        people: ['游知澔'],
+      },
+    ]
+  },
+  methods: {
+    markdown: marked,
   },
 });

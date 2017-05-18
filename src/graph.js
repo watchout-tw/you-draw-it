@@ -267,9 +267,11 @@ var mxGraph = {
       var lastOrig = this.rows.orig.filter(function(row, i) {
         return row.fix && i + 1 < self.rows.orig.length && !self.rows.orig[i + 1].fix;
       }).pop();
+      var viewport = $(window).width();
+      var zoom = viewport > this.size.w ? 1 : viewport/this.size.w;
       this.el.container.select('.you-draw')
-        .style('top', this.util.axes.y.scale(lastOrig.y) - 54 + 'px')
-        .style('left', this.util.axes.x.scale(lastOrig.x) + 'px');
+        .style('top', this.util.axes.y.scale(lastOrig.y)*zoom - 54 + 'px')
+        .style('left', this.util.axes.x.scale(lastOrig.x)*zoom + 'px');
     }
   }
 }
