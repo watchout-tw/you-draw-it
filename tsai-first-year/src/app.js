@@ -1,18 +1,29 @@
 Vue.component('graph', {
   mixins: [mxGraph],
   created: function() {
-    Vue.http.get('./src/data/' + this.props.id + '.json').then(this.getSuccess, this.getError);
+    Promise.all(
+      [this.props.id].concat(!!this.props.compare ? this.props.compare : []).map(function(id) {
+        return Vue.http.get('./src/data/' + id + '.json');
+      })
+    ).then(this.getSuccess, this.getError);
   },
   methods: {
-    getSuccess: function(response) {
-      // prepare data
-      this.rows.orig = response.body;
-      this.rows.user = JSON.parse(JSON.stringify(response.body))
+    getSuccess: function(responses) {
+      // process responses
+      this.rows.orig = responses.shift().body;
+      this.rows.user = JSON.parse(JSON.stringify(this.rows.orig))
       this.rows.user.forEach(function(row, index, rows) {
         if(row.fix && !(index + 1 < rows.length && !rows[index + 1].fix))
           row.show = false;
       });
+      this.rows.comp = responses.map(function(res) {
+        return res.body.map(function(row) {
+          return Object.assign(row, {show: true, fix: true});
+        });
+      });
+
       // draw
+      this.init();
       this.draw();
     },
     getError: function(response) {
