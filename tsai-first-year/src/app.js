@@ -35,15 +35,19 @@ Vue.component('graph', {
   },
   template: `
   <div class="graph" :id="props.id">
-    <h2>{{ props.title }}</h2>
-    <div class="before a-text-only" v-html="markdown(props.text.before)"></div>
+    <div class="before textgroup">
+      <h2>{{ props.title }}</h2>
+      <div class="text a-text-only" v-html="markdown(props.text.before)"></div>
+    </div>
     <div class="draw">
       <div class="you-draw">
         <div class="line"></div>
         <div class="hand"></div>
       </div>
     </div>
-    <div class="after a-text-only" v-html="markdown(props.text.after)"></div>
+    <div class="after textgroup">
+      <div class="text a-text-only" v-html="markdown(props.text.after)"></div>
+    </div>
   </div>
   `,
 });
