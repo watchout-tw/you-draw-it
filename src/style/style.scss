@@ -64,15 +64,28 @@ $max-width: 30rem;
     position: relative;
     margin-top: 1rem;
 
-    > .text > p {
+    > *:not(button) {
       visibility: hidden;
     }
     &.reveal {
       > button {
         display: none;
       }
-      > .text > p {
+      > *:not(button) {
         visibility: visible;
+      }
+    }
+
+    > .score {
+      text-align: center;
+      font-size: 0.875rem;
+      margin: 1rem 0;
+
+      > .number {
+        line-height: 1em;
+        font-size: 3rem;
+        font-weight: bold;
+        color: $color-musou;
       }
     }
 

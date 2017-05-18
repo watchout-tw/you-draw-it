@@ -10,17 +10,19 @@ Vue.component('graph', {
   methods: {
     getSuccess: function(responses) {
       // process responses
-      this.rows.orig = responses.shift().body;
-      this.rows.user = JSON.parse(JSON.stringify(this.rows.orig))
+      // use this.$set to enable change detection
+      this.$set(this.rows, 'orig', responses.shift().body);
+      this.$set(this.rows, 'user', JSON.parse(JSON.stringify(this.rows.orig)));
       this.rows.user.forEach(function(row, index, rows) {
         if(row.fix && !(index + 1 < rows.length && !rows[index + 1].fix))
           row.show = false;
       });
-      this.rows.comp = responses.map(function(res) {
+
+      this.$set(this.rows, 'comp', responses.map(function(res) {
         return res.body.map(function(row) {
           return Object.assign(row, {show: true, fix: true});
         });
-      });
+      }));
 
       // draw
       this.init();
@@ -46,6 +48,7 @@ Vue.component('graph', {
       </div>
     </div>
     <div class="after textgroup">
+      <div class="score d-flex justify-content-center"><div class="align-self-start">畫的有</div><div class="number">{{ score }}</div><div class="align-self-end">分像呢</div></div>
       <div class="text a-text-only" v-html="markdown(props.text.after)"></div>
     </div>
   </div>

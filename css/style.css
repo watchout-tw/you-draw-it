@@ -50,12 +50,21 @@ h1, h2 {
   .graph .after {
     position: relative;
     margin-top: 1rem; }
-    .graph .after > .text > p {
+    .graph .after > *:not(button) {
       visibility: hidden; }
     .graph .after.reveal > button {
       display: none; }
-    .graph .after.reveal > .text > p {
+    .graph .after.reveal > *:not(button) {
       visibility: visible; }
+    .graph .after > .score {
+      text-align: center;
+      font-size: 0.875rem;
+      margin: 1rem 0; }
+      .graph .after > .score > .number {
+        line-height: 1em;
+        font-size: 3rem;
+        font-weight: bold;
+        color: #FF5368; }
     .graph .after > button {
       position: absolute;
       top: 0;

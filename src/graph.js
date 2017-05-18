@@ -26,6 +26,24 @@ var mxGraph = {
       },
     }
   },
+  computed: {
+    score: function() {
+      var self = this;
+      if(!(this.rows &&this.rows.user))
+        return -1;
+
+      var Y = 0.2*(this.props.axes.y.max - this.props.axes.y.min);
+      var N = 0;
+      var D = 0;
+      this.rows.user.forEach(function(row, i) {
+        if(!row.fix && row.show) {
+          N = N + 1;
+          D = D + (1 - Math.abs(row.y - self.rows.orig[i].y)/Y)*100;
+        }
+      });
+      return D == 0 ? 0 : Math.round(D/N);
+    },
+  },
   methods: {
     drawComp: function(i) {
       this.drawPath(this.el.comp[i], this.rows.comp[i]);
