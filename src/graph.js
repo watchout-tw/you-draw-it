@@ -222,6 +222,9 @@ var mxGraph = {
       this.el.button = d3.select(this.$el).select('.after').append('button')
         .text('不想畫啦')
         .on('click', function() {
+          // remove animation
+          self.el.container.select('.you-draw').remove();
+
           self.rows.orig.forEach(function(row) {
             row.show = true;
           });
@@ -234,7 +237,7 @@ var mxGraph = {
 
       // make callback to redraw at user input
       function redraw() {
-        // hide animation
+        // remove animation
         self.el.container.select('.you-draw').remove();
         // toggle button text
         self.el.button.text('畫好了啦');
@@ -265,7 +268,7 @@ var mxGraph = {
         return row.fix && i + 1 < self.rows.orig.length && !self.rows.orig[i + 1].fix;
       }).pop();
       this.el.container.select('.you-draw')
-        .style('top', this.util.axes.y.scale(lastOrig.y) - 50 + 'px')
+        .style('top', this.util.axes.y.scale(lastOrig.y) - 54 + 'px')
         .style('left', this.util.axes.x.scale(lastOrig.x) + 'px');
     }
   }
