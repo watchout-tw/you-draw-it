@@ -144,7 +144,7 @@ var mxGraph = {
 
           tick.selectAll('text').remove();
           var text = tick.append('g')
-            .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, props.size.h - props.size.p - props.size.r*8].join(',') + ')');
+            .attr('transform', 'translate(' + [-util.axes.x.scale.step()/2, props.size.h - props.size.p - props.size.r*8 + 2].join(',') + ')');
 
           // omit year when repeat
           if(d.indexOf('/') > -1) {
@@ -160,7 +160,7 @@ var mxGraph = {
             }
             d = m;
           }
-          if(d%2 == 0)
+          if(d % 2 == (nodes.length % 2 == 0 ? 0 : 1))
             return;
           text.append('text')
             .text(d + (!this.nextSibling ? props.axes.x.label : ''))

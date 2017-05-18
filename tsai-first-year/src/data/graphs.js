@@ -102,12 +102,12 @@ var graphs = [
         label: '年',
       },
       y: {
-        divider: 100000000000,
+        divider: 1000000,
         unit: 'NTD',
-        label: '千億元',
-        min: 2000000000000,
-        max: 6000000000000,
-        formatString: '.1f',
+        label: '兆元',
+        min: 0,
+        max: 8000000,
+        formatString: 'd',
       }
     },
     sequenceCount: 1,
@@ -118,7 +118,7 @@ var graphs = [
         }
       }
     ],
-    title: '中央債府1年以上公共債務未償餘額',
+    title: '中央政府一年以上公共債務未償餘額',
     text: {
       before: ['test'],
       after: ['qq', 'aoao?'],
@@ -142,9 +142,9 @@ var graphs = [
         divider: 1,
         unit: '%',
         label: '%',
-        min: 2.5,
-        max: 6.5,
-        formatString: '.1f',
+        min: 0,
+        max: 10,
+        formatString: 'd',
       }
     },
     sequenceCount: 1,
@@ -176,11 +176,11 @@ var graphs = [
         label: '年',
       },
       y: {
-        divider: 100000000000,
-        unit: 'billion',
-        label: '十億元',
-        min: 1300000000000,
-        max: 2000000000000,
+        divider: 1000000,
+        unit: 'trillion',
+        label: '兆',
+        min: 1000000,
+        max: 2400000,
         formatString: '.1f',
       }
     },
@@ -188,7 +188,7 @@ var graphs = [
     sequences: [
       {
         label: {
-          formatString: '.1f',
+          formatString: '.2f',
         }
       }
     ],
