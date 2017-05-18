@@ -13,6 +13,7 @@ body {
   font-size: 16px; }
 
 .draw {
+  position: relative;
   width: 100%;
   max-width: 30rem;
   margin: 0 auto; }
@@ -80,5 +81,39 @@ svg {
   @media (max-width: 575px) {
     svg .axis-y {
       display: none; } }
+
+@keyframes grow {
+  0% {
+    width: 0; }
+  100% {
+    width: 60px; } }
+@keyframes move {
+  0% {
+    transform: none; }
+  100% {
+    transform: translate(52px, -30px); } }
+.you-draw {
+  pointer-events: none;
+  position: absolute;
+  width: 120px;
+  height: 120px; }
+  .you-draw > .line {
+    width: 60px;
+    height: 5px;
+    background-size: 20px 5px;
+    background-image: linear-gradient(to right, #FFB55D, #FFB55D 50%, transparent 50%, transparent);
+    transform: rotate(-30deg);
+    transform-origin: center left;
+    position: absolute;
+    top: 50px;
+    animation: grow 1s infinite; }
+  .you-draw > .hand {
+    position: absolute;
+    bottom: 0;
+    left: -16px;
+    width: 40px;
+    height: 60px;
+    background-image: url(../asset/hand.svg);
+    animation: move 1s infinite; }
 
 /*# sourceMappingURL=style.css.map */

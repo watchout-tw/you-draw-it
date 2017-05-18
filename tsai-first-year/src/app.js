@@ -36,7 +36,12 @@ Vue.component('graph', {
     <div class="before">
       <p v-for="paragraph in props.text.before">{{ paragraph }}</p>
     </div>
-    <div class="draw"></div>
+    <div class="draw">
+      <div class="you-draw">
+        <div class="line"></div>
+        <div class="hand"></div>
+      </div>
+    </div>
     <div class="after">
       <p v-for="paragraph in props.text.after">{{ paragraph }}</p>
     </div>

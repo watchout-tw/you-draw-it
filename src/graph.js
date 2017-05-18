@@ -98,7 +98,6 @@ var mxGraph = {
       size.p = size.r*8;
 
       // containers
-      this.el.$container = $(this.$el).find('.draw');
       this.el.container = d3.select(this.$el).select('.draw');
 
       // x & y scale
@@ -235,6 +234,9 @@ var mxGraph = {
 
       // make callback to redraw at user input
       function redraw() {
+        // hide animation
+        self.el.container.select('.you-draw').remove();
+        // toggle button text
         self.el.button.text('畫好了啦');
 
         // get input position
@@ -257,6 +259,14 @@ var mxGraph = {
 
       // draw original sequence
       this.drawOrig();
+
+      // setup animation
+      var lastOrig = this.rows.orig.filter(function(row, i) {
+        return row.fix && i + 1 < self.rows.orig.length && !self.rows.orig[i + 1].fix;
+      }).pop();
+      this.el.container.select('.you-draw')
+        .style('top', this.util.axes.y.scale(lastOrig.y) - 50 + 'px')
+        .style('left', this.util.axes.x.scale(lastOrig.x) + 'px');
     }
   }
 }
