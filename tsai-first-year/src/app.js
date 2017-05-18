@@ -29,17 +29,21 @@ Vue.component('graph', {
     getError: function(response) {
       console.error(response);
     },
+    markdown: function(text) {
+      return marked(text);
+    },
   },
   template: `
   <div class="graph" :id="props.id">
     <h2>{{ props.title }}</h2>
-    <div class="before">
-      <p v-for="paragraph in props.text.before">{{ paragraph }}</p>
+    <div class="before a-text-only" v-html="markdown(props.text.before)"></div>
+    <div class="draw">
+      <div class="you-draw">
+        <div class="line"></div>
+        <div class="hand"></div>
+      </div>
     </div>
-    <div class="draw"></div>
-    <div class="after">
-      <p v-for="paragraph in props.text.after">{{ paragraph }}</p>
-    </div>
+    <div class="after a-text-only" v-html="markdown(props.text.after)"></div>
   </div>
   `,
 });
@@ -52,6 +56,6 @@ var app = new Vue({
     common: CommonData,
     graphs: graphs,
     title: '蔡總統的第一年',
-    description: ['段落文字一', '段落文字二'],
+    description: '文字',
   },
 });
