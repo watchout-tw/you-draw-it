@@ -56,6 +56,6 @@ var app = new Vue({
     common: CommonData,
     graphs: graphs,
     title: '蔡總統的第一年',
-    description: ['段落文字一', '段落文字二'],
+    description: '文字',
   },
 });
