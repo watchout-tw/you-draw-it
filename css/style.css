@@ -30,7 +30,8 @@ h2.list-item {
 .textgroup {
   margin-left: 1rem;
   margin-right: 1rem;
-  max-width: 30rem; }
+  max-width: 30rem;
+  width: auto; }
 
 /* index page */
 .pages > .page {
