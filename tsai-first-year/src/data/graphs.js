@@ -126,7 +126,12 @@ var graphs = [
         formatString: '.1f',
       }
     },
-    compare: ['monthly-visitors-china'],
+    compare: [
+      {
+        id: 'monthly-visitors-china',
+        label: '中國旅客每月來台人數',
+      },
+    ],
     text: {
       title: '中國以外國際旅客有多少'
       before: '民進黨蔡政府執政一年來，中國旅客以外的國際來臺旅客人數，你認為是增加還是減少呢？',
@@ -135,7 +140,7 @@ var graphs = [
   },
   {
     id: 'annual-revenue',
-    title: '各年度中央政府歲入',
+    title: '中央政府歲入',
     sheetID: '1456792974',
     axes: {
       x: {
@@ -166,7 +171,7 @@ var graphs = [
   },
   {
     id: 'annual-spending',
-    title: '各年度中央政府歲出',
+    title: '中央政府歲出',
     sheetID: '1456792974',
     axes: {
       x: {
@@ -189,7 +194,12 @@ var graphs = [
         formatString: '.2f',
       }
     },
-    compare: ['annual-revenue'],
+    compare: [
+      {
+        id: 'annual-revenue',
+        label: '中央政府歲入',
+      },
+    ],
     text: {
       title: '政府每年支出'
       before: '這一年下來，政府每年推動各項政務的「歲出」預算，你認為跟馬英九政府相比如何呢？',

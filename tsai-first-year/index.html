@@ -23,13 +23,14 @@
 <body>
   <div id="app">
     <nav-bar-simple :channel="common.channels.musou"></nav-bar-simple>
-    <header>
+    <header class="textgroup">
       <hgroup>
         <h2>不然你來畫畫看啊</h2>
         <h1>{{ title }}</h1>
       </hgroup>
-      <div class="pgroup">
-        <p v-for="p in description">{{ p }}</p>
+      <div class="description" v-html="markdown(description)"></div>
+      <div class="authorship">
+        <div class="item d-flex flex-row" v-for="item in authorship"><div class="job">{{ item.job }}</div><div v-for="person in item.people" class="person">{{ person }}</div></div>
       </div>
     </header>
     <section id="graphs">
