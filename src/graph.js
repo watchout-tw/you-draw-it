@@ -284,7 +284,7 @@ var mxGraph = {
             row.show = true;
           });
           self.drawOrig();
-          self.el.root.on('mousedown', null);
+          self.el.root.on('click', null);
           self.el.root.on('mousedown.drag', null);
 
           d3.select(self.$el).select('.after').classed('reveal', true);
@@ -312,7 +312,7 @@ var mxGraph = {
       }
 
       // execute callback on click/touch/drag
-      this.el.root.on('mousedown', redraw);
+      this.el.root.on('click', redraw);
       this.el.root.call(d3.drag().on('drag', redraw));
 
       // draw original sequence
