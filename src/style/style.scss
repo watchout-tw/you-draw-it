@@ -62,7 +62,6 @@ $max-width: 30rem;
 
   .after {
     position: relative;
-    margin-top: 1rem;
 
     > *:not(button) {
       visibility: hidden;
@@ -79,19 +78,22 @@ $max-width: 30rem;
     > .score {
       text-align: center;
       font-size: 0.875rem;
-      margin: 1rem 0;
-
       > .number {
         line-height: 1em;
-        font-size: 3rem;
+        @include font-monospace;
+        font-size: 4rem;
         font-weight: bold;
         color: $color-musou;
+        margin: 0 0.25rem;
       }
+    }
+    > .text {
+      margin-top: 1rem;
     }
 
     > button {
       position: absolute;
-      top: 0;
+      top: 0.5rem;
       left: 50%;
       transform: translateX(-50%);
       display: block;

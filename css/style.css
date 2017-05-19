@@ -48,8 +48,7 @@ h1, h2 {
   max-width: 30rem;
   margin: 4rem auto; }
   .graph .after {
-    position: relative;
-    margin-top: 1rem; }
+    position: relative; }
     .graph .after > *:not(button) {
       visibility: hidden; }
     .graph .after.reveal > button {
@@ -58,16 +57,19 @@ h1, h2 {
       visibility: visible; }
     .graph .after > .score {
       text-align: center;
-      font-size: 0.875rem;
-      margin: 1rem 0; }
+      font-size: 0.875rem; }
       .graph .after > .score > .number {
         line-height: 1em;
-        font-size: 3rem;
+        font-family: "Space Mono", monospace;
+        font-size: 4rem;
         font-weight: bold;
-        color: #FF5368; }
+        color: #FF5368;
+        margin: 0 0.25rem; }
+    .graph .after > .text {
+      margin-top: 1rem; }
     .graph .after > button {
       position: absolute;
-      top: 0;
+      top: 0.5rem;
       left: 50%;
       transform: translateX(-50%);
       display: block;

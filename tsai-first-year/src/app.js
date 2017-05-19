@@ -48,7 +48,7 @@ Vue.component('graph', {
       </div>
     </div>
     <div class="after textgroup">
-      <div class="score d-flex justify-content-center"><div class="align-self-start">畫的有</div><div class="number">{{ score }}</div><div class="align-self-end">分像呢</div></div>
+      <div class="score d-flex justify-content-center align-items-center"><div>畫的有</div><div class="number">{{ score }}</div><div>分像呢</div></div>
       <div class="text a-text-only" v-html="markdown(props.text.after)"></div>
     </div>
   </div>
