@@ -2,9 +2,11 @@ Vue.component('graph', {
   mixins: [mxGraph],
   created: function() {
     Promise.all(
-      [this.props.id].concat(!!this.props.compare ? this.props.compare : []).map(function(id) {
-        return Vue.http.get('./src/data/' + id + '.json');
-      })
+      [this.props.id]
+        .concat(!!this.props.compare ? this.props.compare.map(function(comp) { return comp.id; }) : [])
+        .map(function(id) {
+          return Vue.http.get('./src/data/' + id + '.json');
+        })
     ).then(this.getSuccess, this.getError);
   },
   methods: {

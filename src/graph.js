@@ -50,8 +50,8 @@ var mxGraph = {
     },
   },
   methods: {
-    drawComp: function(i) {
-      this.drawPath(this.el.comp[i], this.rows.comp[i]);
+    drawComp: function(i, title) {
+      this.drawPath(this.el.comp[i], this.rows.comp[i], title);
     },
     drawUser: function() {
       this.drawPath(this.el.user, this.rows.user);
@@ -59,7 +59,7 @@ var mxGraph = {
     drawOrig: function() {
       this.drawPath(this.el.orig, this.rows.orig)
     },
-    drawPath: function(el, points) {
+    drawPath: function(el, points, title) {
       // https://github.com/d3/d3-selection/blob/master/README.md#selection_data
       // General Update Pattern
       // select → data → exit → remove → enter → append → merge
@@ -100,13 +100,26 @@ var mxGraph = {
       var endpoints = segments.reduce(function(acc, cur) {
         return acc.concat([cur[0], cur[cur.length - 1]]);
       }, []);
-      var labels = el.selectAll('text').data(endpoints, function(d) { return d.x; });
+      var labels = el.selectAll('text.data').data(endpoints, function(d) { return d.x; });
       labels.exit().remove();
       labels.enter().append('text').merge(labels)
         .text(function(d) { return self.util.sequence.label.format(d.y); })
         .attr('x', function(d) { return self.util.axes.x.scale(d.x); })
         .attr('y', function(d) { return self.util.axes.y.scale(d.y) - self.size.r*2; })
+        .attr('class', 'data')
         .classed('hide', function(d) { return !d.show; });
+
+      if(!!title) {
+        var anchor = 2;
+        el.append('text')
+          .attr('class', 'title')
+          .attr('x', this.util.axes.x.scale(points[anchor].x))
+          .attr('y', this.util.axes.y.scale(points[anchor].y))
+          .attr('dx', '0.5em')
+          .attr('text-anchor', 'start')
+          .attr('alignment-baseline', 'hanging')
+          .text(title);
+      }
     },
     init: function() {
       var size = this.size;
@@ -232,10 +245,10 @@ var mxGraph = {
       // make space for circles and paths
       if(!!this.props.compare) {
         self.el.comp = [];
-        this.props.compare.forEach(function(compID, i) {
-          var comp = self.el.root.append('g').attr('class', 'sequence comp');
-          self.el.comp.push(comp);
-          self.drawComp(i);
+        this.props.compare.forEach(function(comp, i) {
+          var g = self.el.root.append('g').attr('class', 'sequence comp');
+          self.el.comp.push(g);
+          self.drawComp(i, comp.label);
         });
       }
       this.el.user = this.el.root.append('g').attr('class', 'sequence user');

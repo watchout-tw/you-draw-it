@@ -145,8 +145,13 @@ svg {
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    text {
+    text.data {
       text-anchor: middle;
+    }
+    text.title {
+      font-size: 0.875rem;
+      text-anchor: start;
+      alignment-baseline: hanging;
     }
     &.comp {
       path {

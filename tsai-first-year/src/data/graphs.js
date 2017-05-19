@@ -123,7 +123,12 @@ var graphs = [
         formatString: '.1f',
       }
     },
-    compare: ['monthly-visitors-china'],
+    compare: [
+      {
+        id: 'monthly-visitors-china',
+        label: '中國旅客每月來台人數',
+      },
+    ],
     text: {
       before: '民進黨蔡政府執政一年來，中國旅客以外的國際來臺旅客人數，你認為應該是？',
       after: '交通部觀光局[統計](http://admin.taiwan.net.tw/statistics/year.aspx?no=134)，2016年4月政黨輪替前，除中國外其他國家來臺旅客與前一年同期相近，約為53萬人，佔總體旅客人數約58%。\n\n政黨輪替後，其他國家旅客不斷攀升，至2016年底更一度突破80萬人，到今年3月份則為72萬人，佔總體旅客78%。',
@@ -131,7 +136,7 @@ var graphs = [
   },
   {
     id: 'annual-revenue',
-    title: '各年度中央政府歲入',
+    title: '中央政府歲入',
     sheetID: '1456792974',
     axes: {
       x: {
@@ -161,7 +166,7 @@ var graphs = [
   },
   {
     id: 'annual-spending',
-    title: '各年度中央政府歲出',
+    title: '中央政府歲出',
     sheetID: '1456792974',
     axes: {
       x: {
@@ -184,7 +189,12 @@ var graphs = [
         formatString: '.2f',
       }
     },
-    compare: ['annual-revenue'],
+    compare: [
+      {
+        id: 'annual-revenue',
+        label: '中央政府歲入',
+      },
+    ],
     text: {
       before: '這一年下來，政府每年推動各項政務的「歲出」預算，你認為的狀況是？',
       after: '依據行政院主計處[統計資料](http://www.dgbas.gov.tw/public/data/dgbas01/106/106Ctab/106C歷年中央政府收支概況表.PDF)，2001年到2005年民進黨扁政府執政期間，連5年都呈現歲出大於歲入的超支情形，2006年開始出現餘絀，到了2007年在歲入1兆6354億元、歲出為1兆5520億元下，則創造834億元餘額。\n\n國民黨政府上任後，除2008年仍有餘額，其餘7年都呈現超支，其中以2012年超支2140億元為最。而民進黨再次執政後，目前仍是歲出大於歲入，以2017年而言，歲入1兆8411億元、歲出1兆9740億元，超支1329億元。',
