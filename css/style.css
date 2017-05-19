@@ -23,11 +23,23 @@ header {
 h1, h2 {
   line-height: 1.25em; }
 
+h2.list-item {
+  font-size: 1.5rem;
+  margin: 0; }
+
 .textgroup {
   margin-left: 1rem;
   margin-right: 1rem;
   max-width: 30rem; }
 
+/* index page */
+.pages > .page {
+  margin: 1rem;
+  padding: 1rem 2rem;
+  background: rgba(255, 83, 104, 0.25);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.25); }
+
+/* individual pages */
 .authorship {
   color: #50E3C2; }
   .authorship > .item > .job {
