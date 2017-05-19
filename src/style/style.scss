@@ -238,3 +238,14 @@ $animation-iteration-count: infinite;
     animation: move $animation-time $animation-iteration-count;
   }
 }
+
+#bridge {
+  width: 100%;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  background: rgba($color-musou, 0.25);
+  text-align: center;
+  @include font-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+}

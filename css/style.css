@@ -175,4 +175,14 @@ svg {
     background-image: url(../asset/hand.svg);
     animation: move 1s infinite; }
 
+#bridge {
+  width: 100%;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  background: rgba(255, 83, 104, 0.25);
+  text-align: center;
+  font-family: "noto-serif-patch", "source-han-serif-tc", serif;
+  font-weight: bold;
+  font-size: 1.5rem; }
+
 /*# sourceMappingURL=style.css.map */

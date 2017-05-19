@@ -36,9 +36,10 @@
     <section id="graphs">
       <graph v-for="props in graphs" :key="props.id" :props="props"></graph>
     </section>
+    <section id="bridge">畫完了，然後呢？</section>
     <section id="conclusion" class="textgroup">
       <h2>{{ conclusion.title }}</h2>
-      <div v-html="markdown(conclusion.description)"></div>
+      <div class="description a-text-only" v-html="markdown(conclusion.description)"></div>
     </section>
   </div><!-- end of app -->
   <footer></footer>
