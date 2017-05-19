@@ -40,7 +40,7 @@ Vue.component('graph', {
   template: `
   <div class="graph" :id="props.id">
     <div class="before textgroup">
-      <h2>{{ props.title }}</h2>
+      <h2>{{ props.text.title }}</h2>
       <div class="text a-text-only" v-html="markdown(props.text.before)"></div>
     </div>
     <div class="draw">
