@@ -5,6 +5,11 @@ var colors = {
   'ma-2': 'rgba(0, 0, 255, 0.35)',
   'tsai-1': 'rgba(0, 255, 0, 0.25)',
 };
+var presidents = {
+  'bian': '陳水扁',
+  'ma': '馬英九',
+  'tsai': '蔡英文',
+};
 var mxGraph = {
   props: {
     id: String,
@@ -228,6 +233,21 @@ var mxGraph = {
         .attr('width', this.util.axes.x.scale.step())
         .attr('height', this.util.axes.y.scale(this.props.axes.y.min) - this.util.axes.y.scale(this.props.axes.y.max))
         .attr('fill', function(d) { return colors[d.label]; });
+
+      var lastPresident = 'hui';
+      this.rows.user.forEach(function(row, i, rows) {
+        var [president, term] = row.label.split('-');
+        if(president != lastPresident) {
+          self.el.bg.append('text')
+            .text(presidents[president])
+            .attr('class', 'president')
+            .attr('x', self.util.axes.x.scale(row.x))
+            .attr('y', self.util.axes.y.scale(self.props.axes.y.max))
+            .attr('dx', '0.25rem')
+            .attr('dy', '0.25rem');
+        }
+        lastPresident = president;
+      })
 
       // draw x axis
       this.el.x = this.el.root.append('g')

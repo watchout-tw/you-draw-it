@@ -156,6 +156,14 @@ svg {
       stroke-dasharray: 2,2;
     }
   }
+  .president {
+    text-anchor: start;
+    alignment-baseline: hanging;
+    font-size: 1rem;
+    font-weight: bold;
+    @include font-serif;
+    opacity: 0.25;
+  }
   .sequence {
     path {
       stroke-width: 5;
