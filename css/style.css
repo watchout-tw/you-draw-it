@@ -84,6 +84,7 @@ h2.list-item {
       top: 0.5rem;
       left: 50%;
       transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
       display: block;
       padding: 0.5rem 1rem;
       background: #FF5368;
@@ -163,6 +164,8 @@ svg {
     background-image: linear-gradient(to right, #FFB55D, #FFB55D 50%, transparent 50%, transparent);
     transform: rotate(-30deg);
     transform-origin: center left;
+    -webkit-transform: rotate(-30deg);
+    -webkit-transform-origin: center left;
     position: absolute;
     top: 50px;
     animation: grow 1s infinite; }
