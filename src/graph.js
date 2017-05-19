@@ -38,10 +38,12 @@ var mxGraph = {
       var d = 0;
       var sum = 0;
       this.rows.user.forEach(function(row, i) {
-        if(!row.fix && row.show) {
-          d = Math.abs(row.y - self.rows.orig[i].y);
-          sum = sum + (1 - (d > y ? y : d)/y)*100;
+        if(!row.fix) {
           n = n + 1;
+          if(row.show) {
+            d = Math.abs(row.y - self.rows.orig[i].y);
+            sum = sum + (1 - (d > y ? y : d)/y)*100;
+          }
         }
       });
       return n == 0 ? 0 : Math.round(sum/n);
