@@ -199,6 +199,7 @@ var mxGraph = {
       };
       util.axes.y.axis = d3.axisRight(util.axes.y.scale)
         .tickSize(0)
+        .tickValues(this.props.axes.y.ticks)
         .tickFormat(function(d) {
           // format + unit at last tick
           return util.axes.y.format(d);
