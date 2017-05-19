@@ -23,11 +23,12 @@
 <body>
   <div id="app">
     <nav-bar-simple :channel="common.channels.musou"></nav-bar-simple>
-    <h1>不然你來畫畫看啊</h1>
-    <div class="pages">
-      <div v-for="page in pages" :key="page.id">
-        <a class="a-text" :href="page.id">{{ page.title }}</a>
-      </div>
+    <header class="textgroup">
+      <h1>{{ title }}</h1>
+      <div class="description" v-html="markdown(description)"></div>
+    </header>
+    <div class="pages d-flex flex-wrap">
+      <a v-for="page in pages" :key="page.id" :href="page.id" class="page"><h2 class="list-item">{{ page.title }}</h2></a>
     </div>
   </div><!-- end of app -->
   <footer></footer>
@@ -49,6 +50,7 @@ ga('send', 'pageview');
   <script src="https://watchout.tw/src/common.js"></script>
   <!-- common scripts -->
   <!-- page-specific scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
   <script src="./src/app.js"></script>
 </body>
 </html>
