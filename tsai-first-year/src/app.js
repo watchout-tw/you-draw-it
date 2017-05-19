@@ -19,7 +19,9 @@ Vue.component('graph', {
 
       this.$set(this.rows, 'comp', responses.map(function (res) {
         return res.body.map(function (row) {
-          return Object.assign(row, { show: true, fix: true });
+          row.show = true;
+          row.fix = true;
+          return row;
         });
       }));
 
@@ -66,4 +68,3 @@ var app = new Vue({
     markdown: marked
   }
 });
-
