@@ -326,7 +326,9 @@ var mxGraph = {
       var zoom = viewport > this.size.w ? 1 : viewport/this.size.w;
       this.el.container.select('.you-draw')
         .style('top', this.util.axes.y.scale(lastOrig.y)*zoom - 54 + 'px')
-        .style('left', this.util.axes.x.scale(lastOrig.x)*zoom + 'px');
+        .style('left', this.util.axes.x.scale(lastOrig.x)*zoom + 'px')
+        .style('transform', 'scale(' + zoom + ')')
+        .style('transform-origin', 'center left');
     }
   }
 }
