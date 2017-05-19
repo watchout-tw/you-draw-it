@@ -116,8 +116,6 @@ var mxGraph = {
           .attr('x', this.util.axes.x.scale(points[anchor].x))
           .attr('y', this.util.axes.y.scale(points[anchor].y))
           .attr('dx', '0.5em')
-          .attr('text-anchor', 'start')
-          .attr('alignment-baseline', 'hanging')
           .text(title);
       }
     },
