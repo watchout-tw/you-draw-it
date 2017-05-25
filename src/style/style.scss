@@ -77,6 +77,9 @@ $max-width: 30rem;
   max-width: $max-width;
   margin: 4rem auto 2rem;
 
+  .title {
+    margin: 0.5rem 0;
+  }
   .after {
     position: relative;
 

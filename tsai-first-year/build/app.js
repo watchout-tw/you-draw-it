@@ -19,9 +19,7 @@ Vue.component('graph', {
 
       this.$set(this.rows, 'comp', responses.map(function (res) {
         return res.body.map(function (row) {
-          row.show = true;
-          row.fix = true;
-          return row;
+          return Object.assign(row, { show: true, fix: true });
         });
       }));
 
@@ -36,7 +34,7 @@ Vue.component('graph', {
       return marked(text);
     }
   },
-  template: '\n  <div class="graph" :id="props.id">\n    <div class="before textgroup">\n      <h2>{{ props.text.title }}</h2>\n      <div class="text a-text-only" v-html="markdown(props.text.before)"></div>\n    </div>\n    <div class="draw">\n      <div class="you-draw">\n        <div class="line"></div>\n        <div class="hand"></div>\n      </div>\n    </div>\n    <div class="after textgroup">\n      <div class="score d-flex justify-content-center align-items-center"><div>\u756B\u7684\u6709</div><div class="number">{{ score }}</div><div>\u5206\u50CF\u5462</div></div>\n      <div class="text a-text-only" v-html="markdown(props.text.after)"></div>\n    </div>\n  </div>\n  '
+  template: '\n  <div class="graph" :id="props.id">\n    <div class="before textgroup">\n      <div class="title"><h2>{{ props.text.title }}</h2></div>\n      <div class="text a-text-only" v-html="markdown(props.text.before)"></div>\n    </div>\n    <div class="draw">\n      <div class="you-draw">\n        <div class="line"></div>\n        <div class="hand"></div>\n      </div>\n    </div>\n    <div class="after textgroup">\n      <div class="score d-flex justify-content-center align-items-center"><div>\u756B\u7684\u6709</div><div class="number">{{ score }}</div><div>\u5206\u50CF\u5462</div></div>\n      <div class="text a-text-only" v-html="markdown(props.text.after)"></div>\n    </div>\n  </div>\n  '
 });
 
 var app = new Vue({

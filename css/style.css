@@ -59,6 +59,8 @@ h2.list-item {
 .graph {
   max-width: 30rem;
   margin: 4rem auto 2rem; }
+  .graph .title {
+    margin: 0.5rem 0; }
   .graph .after {
     position: relative; }
     .graph .after > *:not(button) {
