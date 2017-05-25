@@ -34,7 +34,7 @@ Vue.component('graph', {
       return marked(text);
     }
   },
-  template: '\n  <div class="graph" :id="props.id">\n    <div class="before textgroup">\n      <div class="title"><h2>{{ props.text.title }}</h2></div>\n      <div class="text a-text-only" v-html="markdown(props.text.before)"></div>\n    </div>\n    <div class="draw">\n      <div class="you-draw">\n        <div class="line"></div>\n        <div class="hand"></div>\n      </div>\n    </div>\n    <div class="after textgroup">\n      <div class="score d-flex justify-content-center align-items-center"><div>\u756B\u7684\u6709</div><div class="number">{{ score }}</div><div>\u5206\u50CF\u5462</div></div>\n      <div class="text a-text-only" v-html="markdown(props.text.after)"></div>\n    </div>\n  </div>\n  '
+  template: '<div class="graph" :id="props.id"><div class="before textgroup"><div class="title"><h2>{{ props.text.title }}</h2></div><div class="text a-text-only" v-html="markdown(props.text.before)"></div></div><div class="draw"><div class="you-draw"><div class="line"></div><div class="hand"></div></div></div><div class="after textgroup"><div class="score d-flex justify-content-center align-items-center"><div>\u756B\u7684\u6709</div><div class="number">{{ score }}</div><div>\u5206\u50CF\u5462</div></div><div class="text a-text-only" v-html="markdown(props.text.after)"></div></div></div>'
 });
 
 var app = new Vue({
