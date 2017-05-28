@@ -1,5 +1,5 @@
 Vue.component('graph', {
-  mixins: [mxGraph],
+  mixins: [mixinGraph],
   created: function () {
     Promise.all([this.props.id].concat(!!this.props.compare ? this.props.compare.map(function (comp) {
       return comp.id;

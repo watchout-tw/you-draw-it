@@ -12,7 +12,7 @@ var presidents = {
   'ma': '馬英九',
   'tsai': '蔡英文'
 };
-var mxGraph = {
+var mixinGraph = {
   props: {
     id: String,
     props: Object
