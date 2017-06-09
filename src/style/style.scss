@@ -161,7 +161,6 @@ svg {
   }
   .president {
     text-anchor: start;
-    alignment-baseline: hanging;
     font-size: 1rem;
     font-weight: bold;
     @include font-serif;
@@ -179,7 +178,6 @@ svg {
     text.title {
       font-size: 0.875rem;
       text-anchor: start;
-      alignment-baseline: hanging;
     }
     &.comp {
       path {

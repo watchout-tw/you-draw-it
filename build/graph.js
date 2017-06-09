@@ -124,7 +124,7 @@ var mixinGraph = {
 
       if (!!title) {
         var anchor = 2;
-        el.append('text').attr('class', 'title').attr('x', this.util.axes.x.scale(points[anchor].x)).attr('y', this.util.axes.y.scale(points[anchor].y)).attr('dx', '0.5em').text(title);
+        el.append('text').attr('class', 'title').attr('x', this.util.axes.x.scale(points[anchor].x)).attr('y', this.util.axes.y.scale(points[anchor].y)).attr('dx', 0.5 * this.size.rem).attr('dy', 1 * this.size.rem).text(title);
       }
     },
     init: function () {
@@ -184,12 +184,12 @@ var mixinGraph = {
               target = target.previousSibling;
             }
             if (!(!!target && d3.select(target).datum().indexOf(y) > -1)) {
-              text.append('text').attr('dy', '2em').text(y);
+              text.append('text').attr('dy', 2 * size.rem).text(y);
             }
             d = m;
           }
           if (d % 2 == (nodes.length % 2 == 0 ? 0 : 1)) return;
-          text.append('text').text(d + (!this.nextSibling ? props.axes.x.label : '')).attr('dy', '1em');
+          text.append('text').text(d + (!this.nextSibling ? props.axes.x.label : '')).attr('dy', 1 * size.rem);
         });
       };
 
@@ -205,13 +205,15 @@ var mixinGraph = {
         g.call(util.axes.y.axis);
         g.select('.domain').remove();
         g.selectAll('.tick > text').attr('x', 0);
-        g.select('.tick:last-of-type').append('text').classed('unit-label', true).attr('dy', '-1em').text(props.axes.y.label);
+        g.select('.tick:last-of-type').append('text').classed('unit-label', true).attr('dy', -1 * size.rem).text(props.axes.y.label);
       };
     },
     draw: function () {
       var self = this;
 
       this.el.root = this.el.container.append('svg').attr('viewBox', [0, 0, this.size.w, this.size.h].join(' '));
+
+      this.size.rem = parseInt(this.el.root.style('font-size'));
 
       // draw background
       this.el.bg = this.el.root.append('g').attr('class', 'bg').attr('transform', 'translate(' + [-this.util.axes.x.scale.step() / 2, 0].join(',') + ')');
@@ -232,7 +234,7 @@ var mixinGraph = {
             term = _row$label$split2[1];
 
         if (president != lastPresident) {
-          self.el.bg.append('text').text(presidents[president]).attr('class', 'president').attr('x', self.util.axes.x.scale(row.x)).attr('y', self.util.axes.y.scale(self.props.axes.y.max)).attr('dx', '0.25rem').attr('dy', '0.25rem');
+          self.el.bg.append('text').text(presidents[president]).attr('class', 'president').attr('x', self.util.axes.x.scale(row.x)).attr('y', self.util.axes.y.scale(self.props.axes.y.max)).attr('dx', 0.25 * self.size.rem).attr('dy', 1.25 * self.size.rem);
         }
         lastPresident = president;
       });

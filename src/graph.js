@@ -120,7 +120,8 @@ var mixinGraph = {
           .attr('class', 'title')
           .attr('x', this.util.axes.x.scale(points[anchor].x))
           .attr('y', this.util.axes.y.scale(points[anchor].y))
-          .attr('dx', '0.5em')
+          .attr('dx', 0.5*this.size.rem)
+          .attr('dy', 1*this.size.rem)
           .text(title);
       }
     },
@@ -180,7 +181,7 @@ var mixinGraph = {
             }
             if(!(!!target && d3.select(target).datum().indexOf(y) > -1)) {
               text.append('text')
-                .attr('dy', '2em')
+                .attr('dy', 2*size.rem)
                 .text(y);
             }
             d = m;
@@ -189,7 +190,7 @@ var mixinGraph = {
             return;
           text.append('text')
             .text(d + (!this.nextSibling ? props.axes.x.label : ''))
-            .attr('dy', '1em');
+            .attr('dy', 1*size.rem);
         })
       };
 
@@ -211,7 +212,7 @@ var mixinGraph = {
           .attr('x', 0)
         g.select('.tick:last-of-type').append('text')
           .classed('unit-label', true)
-          .attr('dy', '-1em')
+          .attr('dy', -1*size.rem)
           .text(props.axes.y.label);
       };
     },
@@ -220,6 +221,8 @@ var mixinGraph = {
 
       this.el.root = this.el.container.append('svg')
         .attr('viewBox', [0, 0, this.size.w, this.size.h].join(' '));
+
+      this.size.rem = parseInt(this.el.root.style('font-size'));
 
       // draw background
       this.el.bg = this.el.root.append('g')
@@ -244,8 +247,8 @@ var mixinGraph = {
             .attr('class', 'president')
             .attr('x', self.util.axes.x.scale(row.x))
             .attr('y', self.util.axes.y.scale(self.props.axes.y.max))
-            .attr('dx', '0.25rem')
-            .attr('dy', '0.25rem');
+            .attr('dx', 0.25*self.size.rem)
+            .attr('dy', 1.25*self.size.rem);
         }
         lastPresident = president;
       })
