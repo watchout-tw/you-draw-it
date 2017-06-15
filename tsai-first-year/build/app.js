@@ -1,3 +1,5 @@
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 Vue.component('graph', {
   mixins: [mixinGraph],
   created: function () {
@@ -19,7 +21,7 @@ Vue.component('graph', {
 
       this.$set(this.rows, 'comp', responses.map(function (res) {
         return res.body.map(function (row) {
-          return Object.assign(row, { show: true, fix: true });
+          return _extends(row, { show: true, fix: true });
         });
       }));
 
